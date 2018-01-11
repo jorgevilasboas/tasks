@@ -1,0 +1,35 @@
+<% include ../partials/header %> 
+
+     <header class="jumbotron">
+         <div class="container">
+             <h1><span class="glyphicon glyphicon-calendar"></span> Tasks</h1>             
+             <p>
+                <a class="btn btn-primary btn-lg" href="/agencias/new">Nova Agência</a>
+             </p>
+              <p>
+              <form action="/agencias" method="GET" class="form-inline" id="agencia-search">
+                <div class="form-group">
+                  <input type="text" name="search" placeholder="Pesquisar agência" class="form-control">
+                </div>
+              </form>
+             </p>
+         </div>
+     </header>
+     
+     <div class="row text-center flex-wrap" id="agencia-grid">
+        <% agencias.forEach(function(agencia){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                   <img src="<%= agencia.image %>">
+                   <div class="caption">
+                       <h4><%= agencia.name %></h4>
+                   </div>
+                   <p>
+                       <a href="/agencias/<%= agencia._id %>" class="btn btn-primary">Visualizar</a>
+                   </p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+<% include ../partials/footer %>
