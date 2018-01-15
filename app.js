@@ -31,6 +31,8 @@ mongoose.Promise = global.Promise;
 
 const databaseUri = process.env.MONGODB_URI || 'mongodb://localhost/tasks';
 
+console.log(databaseUri);
+
 mongoose.connect(databaseUri, { useMongoClient: true })
       .then(() => console.log(`Database connected`))
       .catch(err => console.log(`Database connection error: ${err.message}`));
