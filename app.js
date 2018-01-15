@@ -79,6 +79,6 @@ app.use(errorhandler())
 });
 */
 
-app.listen(3000, function () {
+app.listen(PORT, function () {
     console.log('Server listening on port 3000!');
   });
