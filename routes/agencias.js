@@ -1,10 +1,10 @@
 var express = require("express");
 var router  = express.Router();
 var Agencia = require("../models/agencia");
-var Comment = require("../models/comment");
+var Atividade = require("../models/atividade");
 var middleware = require("../middleware");
 var geocoder = require('geocoder');
-var { isLoggedIn, checkUserAgencia, checkUserComment, isAdmin, isSafe } = middleware; // destructuring assignment
+var { isLoggedIn, checkUserAgencia, checkUserAtividade, isAdmin, isSafe } = middleware; // destructuring assignment
 
 // Define escapeRegex function for search feature
 function escapeRegex(text) {
@@ -80,7 +80,7 @@ router.get("/new", isLoggedIn, function(req, res){
 // SHOW - shows more info about one agencia
 router.get("/:id", function(req, res){
     //find the agencia with provided ID
-    Agencia.findById(req.params.id).populate("comments").exec(function(err, foundAgencia){
+    Agencia.findById(req.params.id).populate("atividades").exec(function(err, foundAgencia){
         if(err || !foundAgencia){
             console.log(err);
             req.flash('error', 'Sorry, that agencia does not exist!');
@@ -117,11 +117,11 @@ router.put("/:id", isSafe, function(req, res){
   });
 });
 
-// DELETE - removes agencia and its comments from the database
+// DELETE - removes agencia and its atividades from the database
 router.delete("/:id", isLoggedIn, checkUserAgencia, function(req, res) {
-    Comment.remove({
+    Atividade.remove({
       _id: {
-        $in: req.agencia.comments
+        $in: req.agencia.atividades
       }
     }, function(err) {
       if(err) {

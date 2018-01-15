@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Agencia = require("./models/agencia");
-var Comment   = require("./models/comment");
+var Atividade   = require("./models/atividade");
 
 var data = [
     {
@@ -24,25 +24,25 @@ function seedDB(){
                     console.log(err)
                 } else {
                     console.log("added a agencia");
-                    //create a comment
-                    Comment.create(
+                    //create a atividade
+                    Atividade.create(
                         {
                             text: "This place is great, but I wish there was internet",
                             author: "Homer"
-                        }, function(err, comment){
+                        }, function(err, atividade){
                             if(err){
                                 console.log(err);
                             } else {
-                                agencia.comments.push(comment);
+                                agencia.atividades.push(atividade);
                                 agencia.save();
-                                console.log("Created new comment");
+                                console.log("Created new atividade");
                             }
                         });
                 }
             });
         });
     }); 
-    //add a few comments
+    //add a few atividades
 }
 
 module.exports = seedDB;

@@ -9,7 +9,7 @@ var express        = require("express"),
     LocalStrategy  = require("passport-local"),
     flash          = require("connect-flash"),
     Agencia        = require("./models/agencia"),
-    Comment        = require("./models/comment"),
+    Atividade        = require("./models/atividade"),
     User           = require("./models/user"),
     session        = require("express-session"),
     seedDB         = require("./seeds"),
@@ -22,7 +22,7 @@ require('dotenv').load();
 var PORT = process.env.PORT;
 
 //requiring routes
-var commentRoutes    = require("./routes/comments"),
+var atividadeRoutes    = require("./routes/atividades"),
     agenciaRoutes = require("./routes/agencias"),
     indexRoutes      = require("./routes/index")
     
@@ -71,7 +71,7 @@ app.use(function(req, res, next){
 
 app.use("/", indexRoutes);
 app.use("/agencias", agenciaRoutes);
-app.use("/agencias/:id/comments", commentRoutes);
+app.use("/agencias/:id/atividades", atividadeRoutes);
 app.use(errorhandler())
 //second arg process.env.IP
 /*app.listen(PORT, "localhost",  function(){
@@ -80,5 +80,5 @@ app.use(errorhandler())
 */
 
 app.listen(PORT, function () {
-    console.log('Server listening on port 3000!');
+    console.log('Server listening on port' + PORT );
   });

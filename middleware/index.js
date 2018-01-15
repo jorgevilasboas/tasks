@@ -1,4 +1,4 @@
-var Comment = require('../models/comment');
+var Atividade = require('../models/atividade');
 var Agencia = require('../models/agencia');
 module.exports = {
   isLoggedIn: function(req, res, next){
@@ -23,14 +23,14 @@ module.exports = {
       }
     });
   },
-  checkUserComment: function(req, res, next){
-    Comment.findById(req.params.commentId, function(err, foundComment){
-       if(err || !foundComment){
+  checkUserAtividade: function(req, res, next){
+    Atividade.findById(req.params.atividadeId, function(err, foundAtividade){
+       if(err || !foundAtividade){
            console.log(err);
-           req.flash('error', 'Sorry, that comment does not exist!');
+           req.flash('error', 'Sorry, that atividade does not exist!');
            res.redirect('/agencias');
-       } else if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
-            req.comment = foundComment;
+       } else if(foundAtividade.author.id.equals(req.user._id) || req.user.isAdmin){
+            req.atividade = foundAtividade;
             next();
        } else {
            req.flash('error', 'You don\'t have permission to do that!');
