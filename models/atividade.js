@@ -1,7 +1,10 @@
 var mongoose = require("mongoose");
 
 var atividadeSchema = mongoose.Schema({
-    text: String,
+    tile: String,
+    start: Date,
+    end: Date,
+    url: String,
     createdAt: { type: Date, default: Date.now },
     author: {
         id: {

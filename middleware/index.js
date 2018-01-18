@@ -5,20 +5,20 @@ module.exports = {
       if(req.isAuthenticated()){
           return next();
       }
-      req.flash('error', 'You must be signed in to do that!');
+      req.flash('error', 'Você deve estar logado para fazer isso!');
       res.redirect('/login');
   },
   checkUserAgencia: function(req, res, next){
     Agencia.findById(req.params.id, function(err, foundAgencia){
       if(err || !foundAgencia){
           console.log(err);
-          req.flash('error', 'Sorry, that agencia does not exist!');
+          req.flash('error', 'Desculpe, essa agencia não existe!');
           res.redirect('/agencias');
       } else if(foundAgencia.author.id.equals(req.user._id) || req.user.isAdmin){
           req.agencia = foundAgencia;
           next();
       } else {
-          req.flash('error', 'You don\'t have permission to do that!');
+          req.flash('error', 'Você não tem permissão para fazer isso!');
           res.redirect('/agencias/' + req.params.id);
       }
     });
@@ -27,13 +27,13 @@ module.exports = {
     Atividade.findById(req.params.atividadeId, function(err, foundAtividade){
        if(err || !foundAtividade){
            console.log(err);
-           req.flash('error', 'Sorry, that atividade does not exist!');
+           req.flash('error', 'Desculpe, essa atividade não existe!');
            res.redirect('/agencias');
        } else if(foundAtividade.author.id.equals(req.user._id) || req.user.isAdmin){
             req.atividade = foundAtividade;
             next();
        } else {
-           req.flash('error', 'You don\'t have permission to do that!');
+           req.flash('error', 'Você não tem permissão para fazer isso!');
            res.redirect('/agencias/' + req.params.id);
        }
     });

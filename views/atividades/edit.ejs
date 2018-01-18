@@ -4,13 +4,19 @@
         <div style="width: 30%; margin: 25px auto;">
             <form action="/agencias/<%= agencia_id %>/atividades/<%=atividade._id %>?_method=PUT" method="POST">
                 <div class="form-group">
-                    <input class="form-control" type="text" value="<%=atividade.text %>" name="atividade[text]" placeholder="text">
+                    <input class="form-control" type="text" value="<%=atividade.tile %>" name="atividade[text]" placeholder="Título">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                    <input class="form-control" type="date" value="<%=atividade.start %>" name="atividade[start]" placeholder="Título">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="date" value="<%=atividade.end %>" name="atividade[end]" placeholder="Título">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Alterar</button>
                 </div>
             </form>
-            <a href="/agencias">Go Back</a>
+            <a href="/agencias">Voltar</a>
         </div>
     </div>
 <% include ../partials/footer %>

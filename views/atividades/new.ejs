@@ -1,16 +1,22 @@
 <% include ../partials/header %>
     <div class="row">
-        <h1 style="text-align: center">Add New Atividade to <%= agencia.name %></h1>
+        <h1 style="text-align: center">Cadastrar Atividade da Agência <%= agencia.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
             <form action="/agencias/<%= agencia._id %>/atividades" method="POST">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="atividade[text]" placeholder="text">
+                    <input class="form-control" type="text" name="atividade[tile]" placeholder="Título">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                    <input class="form-control" type="date" name="atividade[start]" placeholder="Data Início">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="date" name="atividade[end]" placeholder="Data Fim">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Cadastrar</button>
                 </div>
             </form>
-            <a href="/agencias">Go Back</a>
+            <a href="/agencias">Voltar</a>
         </div>
     </div>
 <% include ../partials/footer %>

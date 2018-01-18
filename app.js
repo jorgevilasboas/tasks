@@ -19,7 +19,7 @@ var express        = require("express"),
 // configure dotenv
 require('dotenv').load();
 
-var PORT = process.env.PORT;
+var PORT = process.env.PORT || 3000;
 
 //requiring routes
 var atividadeRoutes    = require("./routes/atividades"),
@@ -80,5 +80,5 @@ app.use(errorhandler())
 */
 
 app.listen(PORT, function () {
-    console.log('Server listening on port' + PORT );
+    console.log('Server listening on port ' + PORT );
   });

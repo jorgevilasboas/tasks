@@ -1,98 +1,14 @@
-        </div><!-- /.container -->
-        <footer class="footer">
-          <div class="container">
-            <p class="text-muted">&copy; Atividades | <a href="/agencias">Home</a> | <a href="/agencias/new">New Agencia</a></p>
-          </div>
-        </footer>
-        <!-- jQuery CDN -->
-        <script
-          src="https://code.jquery.com/jquery-3.1.1.min.js"
-          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-          crossorigin="anonymous"></script>
-        <!-- Custom JS for search feature -->
-        <script src="/scripts/search.js" async defer></script>
-        <!-- Bootstrap JS CDN -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src='/scripts/moment.min.js'></script>
-    <script src='/scripts/jquery.min.js'></script>
-    <script src='/scripts/fullcalendar.min.js'></script>
-    <script src='/scripts/pt-br.js'></script>
+</div>
+<!-- /.container -->
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">&copy; Atividades |
+      <a href="/agencias">Home</a> |
+      <a href="/agencias/new">New Agencia</a>
+    </p>
+  </div>
+</footer>
 
-    <script>
-    
-      $(document).ready(function() {
-    
-        $('#calendar').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay,listWeek'
-          },
-          lang: 'pt',
-          defaultDate: '2017-12-12',
-          navLinks: true, // can click day/week names to navigate views
-          editable: true,
-          eventLimit: true, // allow "more" link when too many events
-          events: [
-            {
-              title: 'All Day Event',
-              start: '2017-12-01',
-            },
-            {
-              title: 'Long Event',
-              start: '2017-12-07',
-              end: '2017-12-10'
-            },
-            {
-              id: 999,
-              title: 'Repeating Event',
-              start: '2017-12-09T16:00:00'
-            },
-            {
-              id: 999,
-              title: 'Repeating Event',
-              start: '2017-12-16T16:00:00'
-            },
-            {
-              title: 'Conference',
-              start: '2017-12-11',
-              end: '2017-12-13'
-            },
-            {
-              title: 'Meeting',
-              start: '2017-12-12T10:30:00',
-              end: '2017-12-12T12:30:00'
-            },
-            {
-              title: 'Lunch',
-              start: '2017-12-12T12:00:00'
-            },
-            {
-              title: 'Meeting',
-              start: '2017-12-12T14:30:00'
-            },
-            {
-              title: 'Happy Hour',
-              start: '2017-12-12T17:30:00'
-            },
-            {
-              title: 'Dinner',
-              start: '2017-12-12T20:00:00'
-            },
-            {
-              title: 'Birthday Party',
-              start: '2017-12-13T07:00:00'
-            },
-            {
-              title: 'Click for Google',
-              url: 'http://google.com/',
-              start: '2017-12-28'
-            }
-          ]
-        });
-    
-      });
-    
-    </script>
-    </body>
+</body>
+
 </html>
