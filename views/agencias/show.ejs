@@ -22,12 +22,14 @@
     <div class="row">
       <div id='calendar'></div>
     </div>
+    <div class="row"> <%= agencia.atividades %> </div>
     <div class="well">
       <div class="text-right">
         <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
       </div>
       <hr>
       <% agencia.atividades.forEach(function(atividade){ %>
+        <% atividades.push(atividade)%>
       <div class="row">
         <div class="col-md-12">
           <strong><%= atividade.author.username %></strong>
@@ -48,6 +50,7 @@
       </div>
     </div>
     <% }) %>
+    <%= atividades%>
   </div>  
 </div>
 <div class="col-md-12">
@@ -104,7 +107,10 @@
 <script src='/scripts/fullcalendar.min.js'></script>
 <script src='/scripts/pt-br.js'></script>
 
-<script>
+<script>  
+
+var atividades = [<%=agencia.atividades%>];
+  
   $(document).ready(function () {
 
     $('#calendar').fullCalendar({
@@ -114,13 +120,16 @@
         right: 'month,agendaWeek,agendaDay,listWeek'
       },
       lang: 'pt',
-      defaultDate: '2017-12-12',
+      defaultDate: '2018-12-12',
       navLinks: true, // can click day/week names to navigate views
       editable: true,
       eventLimit: true, // allow "more" link when too many events
-      events:
-
-        [{
+      
+      events:  atividades
+      
+      /*
+      [{
+            _id: '5a68d068bc24bc36e46217ee',
             title: 'All Day Event',
             start: '2017-12-01',
           },
@@ -180,10 +189,12 @@
             start: Date.now()
           }
         ]
+        */               
     });
   });
   
-  console.log(`<%= agencia %>`);
+  
 </script>
+
 
 <% include ../partials/footer %>

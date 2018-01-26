@@ -22,6 +22,10 @@ var agenciaSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Atividade"
     }]
+}, {
+    usePushEach: true
 });
+
+
 
 module.exports = mongoose.model("Agencia", agenciaSchema);

@@ -79,6 +79,7 @@ router.get("/new", isLoggedIn, function(req, res){
 
 // SHOW - shows more info about one agencia
 router.get("/:id", function(req, res){
+    var atividades = [];
     //find the agencia with provided ID
     Agencia.findById(req.params.id).populate("atividades").exec(function(err, foundAgencia){
         if(err || !foundAgencia){
@@ -88,7 +89,7 @@ router.get("/:id", function(req, res){
         }
         console.log(foundAgencia)
         //render show template with that agencia
-        res.render("agencias/show", {agencia: foundAgencia});
+        res.render("agencias/show", {agencia: foundAgencia, atividades: atividades});
     });
 });
 

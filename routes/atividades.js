@@ -8,7 +8,7 @@ const { isLoggedIn, checkUserAtividade, isAdmin } = middleware;
 //Atividades New
 router.get("/new", isLoggedIn, function(req, res){
     // find agencia by id
-    console.log(req.params.id);
+    //console.log(req.params.id);
     Agencia.findById(req.params.id, function(err, agencia){
         if(err){
             console.log(err);
@@ -18,9 +18,10 @@ router.get("/new", isLoggedIn, function(req, res){
     })
 });
 
+
 //Atividades Create
 router.post("/", isLoggedIn, function(req, res){
-   //lookup agencia using ID
+   //lookup agencia using ID   
    Agencia.findById(req.params.id, function(err, agencia){
        if(err){
            console.log(err);
@@ -33,15 +34,15 @@ router.post("/", isLoggedIn, function(req, res){
                //add username and id to atividade
                atividade.author.id = req.user._id;
                atividade.author.username = req.user.username;
+               console.log(req.body.atividade);
                //save atividade
                atividade.save();
-               agencia.atividades.push(atividade);
-               agencia.save();
-               console.log(atividade);
+               agencia.atividades.push(atividade);           
+               agencia.save();               
                req.flash('success', 'Created a atividade!');
                res.redirect('/agencias/' + agencia._id);
            }
-        });
+        });        
        }
    });
 });
