@@ -93,6 +93,19 @@ router.get("/:id", function(req, res){
     });
 });
 
+router.get("/:id/atividades", function(req, res){   
+    //find the agencia with provided ID
+    Agencia.findById(req.params.id).populate("atividades").exec(function(err, foundAgencia){
+        if(err || !foundAgencia){
+            console.log(err);
+            req.flash('error', 'Sorry, that agencia does not exist!');
+            return res.redirect('/agencias');
+        }        
+        //render show template with that agencia
+        res.send(foundAgencia.atividades);
+    });
+});
+
 // EDIT - shows edit form for a agencia
 router.get("/:id/edit", isLoggedIn, checkUserAgencia, function(req, res){
   //render edit template with that agencia
