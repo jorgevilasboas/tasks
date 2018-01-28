@@ -109,9 +109,15 @@
 
 <script>  
 
-var atividades = $.getJSON("http://localhost:3000/agencias/5a6c8c3fad33d414c47ead94/atividades");
-var strAtividade = JSON.stringify(atividades);
-console.log(strAtividade);
+var atividades = {};
+//var strAtividade = JSON.stringify(atividades);
+
+$.getJSON("http://localhost:3000/agencias/5a6c8c3fad33d414c47ead94/atividades", function(result){
+  atividades = result;
+  console.dir(atividades);
+});
+
+//console.log(strAtividade);
   
   $(document).ready(function () {
 
@@ -127,7 +133,7 @@ console.log(strAtividade);
       editable: true,
       eventLimit: true, // allow "more" link when too many events
       
-      events:  atividades
+      events:  atividades //"http://localhost:3000/agencias/5a6c8c3fad33d414c47ead94/atividades"
       
       /*
       [{

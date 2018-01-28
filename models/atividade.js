@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var atividadeSchema = mongoose.Schema({
-    tile: String,
+    title: String,
     start: Date,
     end: Date,
     url: String,
