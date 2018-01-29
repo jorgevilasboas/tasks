@@ -22,7 +22,6 @@
     <div class="row">
       <div id='calendar'></div>
     </div>
-    <div class="row"> <%= agencia.atividades %> </div>
     <div class="well">
       <div class="text-right">
         <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
@@ -35,7 +34,7 @@
           <strong><%= atividade.author.username %></strong>
           <span class="pull-right"><%= moment(atividade.createdAt).fromNow() %></span>
           <div>
-           <%= atividade.tile %> 
+           <%= atividade.title %> 
 
            <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
             <div class="pull-right">
@@ -50,7 +49,6 @@
       </div>
     </div>
     <% }) %>
-    <%= atividades%>
   </div>  
 </div>
 <div class="col-md-12">
