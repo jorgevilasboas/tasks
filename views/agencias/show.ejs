@@ -112,7 +112,7 @@
 var atividades = {};
 //var strAtividade = JSON.stringify(atividades);
 
-$.getJSON("http://localhost:3000/agencias/5a6c8c3fad33d414c47ead94/atividades", function(result){
+$.getJSON("/agencias/<%= agencia._id %>/atividades", function(result){
   atividades = result;
   console.dir(atividades);
 });
