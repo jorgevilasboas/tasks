@@ -103,6 +103,7 @@ router.get("/:id/atividades", function(req, res){
         }
         foundAgencia.atividades.forEach(element => {
             element.url = "/agencias/" + req.params.id + "/atividades/" + element._id + "/edit";
+            element.color = "yellow";
         });
         //render show template with that agencia
         res.send(foundAgencia.atividades);
