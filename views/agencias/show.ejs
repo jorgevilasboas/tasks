@@ -1,137 +1,147 @@
 <% include ../partials/header %>
-<div class="row">  
-  <div class="col-md-12">
-    <div class="thumbnail">
-      <img class="img-responsive" src="<%= agencia.image %>">
-      <div class="caption-full">
-        <h4 class="pull-right">          
-        </h4>
-        <h4><a><%=agencia.name%></a></h4>
-        <p><%= agencia.description %></p>
-        <p>
-          <em>Criado por: <%= agencia.author.username %> %></em>
-        </p>
-        <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-        <a class="btn btn-warning" href="/agencias/<%= agencia._id %>/edit">Edit</a>
-        <form action="/agencias/<%= agencia._id %>?_method=DELETE" method="POST" class="delete-form">
-          <button class="btn btn-danger">Delete</button>
-        </form>
-        <% } %>
-      </div>
-    </div>
-    <div class="row">
-      <div id='calendar'></div>
-    </div>
-    <div class="well">
-      <div class="text-right">
-        <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
-      </div>
-      <hr>
-      <% agencia.atividades.forEach(function(atividade){ %>
-        <% atividades.push(atividade)%>
-      <div class="row">
-        <div class="col-md-12">
-          <strong><%= atividade.author.username %></strong>
-          <span class="pull-right"><%= moment(atividade.createdAt).fromNow() %></span>
-          <div>
-           <%= atividade.title %> 
-
-           <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-            <div class="pull-right">
-              <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning">EDIT</a>
-              <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE" method="POST">
-                <button class="btn btn-xs btn-danger">DELETE</button>
-              </form>
-            </div>
-          <% } %>
-          <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="thumbnail">
+        <img class="img-responsive" src="<%= agencia.image %>">
+        <div class="caption-full">
+          <h4 class="pull-right">
+          </h4>
+          <h4>
+            <a>
+              <%=agencia.name%>
+            </a>
+          </h4>
+          <p>
+            <%= agencia.description %>
+          </p>
+          <p>
+            <em>Criado por:
+              <%= agencia.author.username %> %></em>
+          </p>
+          <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+            <a class="btn btn-warning" href="/agencias/<%= agencia._id %>/edit">Edit</a>
+            <form action="/agencias/<%= agencia._id %>?_method=DELETE" method="POST" class="delete-form">
+              <button class="btn btn-danger">Delete</button>
+            </form>
+            <% } %>
         </div>
       </div>
-    </div>
-    <% }) %>
-  </div>  
-</div>
-<div class="col-md-12">
-  <p class="lead">Tasks</p>
-  <div class="list-group">
-    <li class="list-group-item active">Info 1</li>
-    <li class="list-group-item">Info 2</li>
-    <li class="list-group-item">Info 3</li>
-  </div>
-  <div id="map"></div>
-</div>
-</div>
+      <div class="row">
+        <div id='calendar'></div>
+      </div>
+      <div class="well">
+        <div class="text-right">
+          <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
+        </div>
+        <hr>
+        <% agencia.atividades.forEach(function(atividade){ %>
+          <% atividades.push(atividade)%>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>
+                  <%= atividade.author.username %>
+                </strong>
+                <span class="pull-right">
+                  <%= moment(atividade.createdAt).fromNow() %>
+                </span>
+                <div>
+                  <%= atividade.title %>
 
-<script>
-  function initMap() {
-    var lat = <%= agencia.lat %>;
-    var lng = <%= agencia.lng %>;
-    var center = {lat: lat, lng: lng };
-    var map = new google.maps.Map(document.getElementById('map'), {
+                    <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                      <div class="pull-right">
+                        <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning">EDIT</a>
+                        <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE" method="POST">
+                          <button class="btn btn-xs btn-danger">DELETE</button>
+                        </form>
+                      </div>
+                      <% } %>
+                        <hr>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <p class="lead">Tasks</p>
+      <div class="list-group">
+        <li class="list-group-item active">Info 1</li>
+        <li class="list-group-item">Info 2</li>
+        <li class="list-group-item">Info 3</li>
+      </div>
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <script>
+    function initMap() {
+      var lat = <%= agencia.lat %>;
+      var lng = <%= agencia.lng %>;
+      var center = { lat: lat, lng: lng };
+      var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
         center: center,
         scrollwheel: false
-    });
-    var contentString = `
+      });
+      var contentString = `
       <strong><%= agencia.name %><br />
       <%= agencia.location %></strong>
       <p><%= agencia.description %></p>
     `
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-    var marker = new google.maps.Marker({
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+      var marker = new google.maps.Marker({
         position: center,
         map: map
+      });
+      marker.addListener('click', function () {
+        infowindow.open(map, marker);
+      });
+    }
+
+
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkG51lwJtDvYFKTBdRZlhzYg1D4QFsXPU&callback=initMap"></script>
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+  <!-- Custom JS for search feature -->
+  <script src="/scripts/search.js" async defer></script>
+  <!-- Bootstrap JS CDN -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <script src='/scripts/moment.min.js'></script>
+  <script src='/scripts/jquery.min.js'></script>
+  <script src='/scripts/fullcalendar.min.js'></script>
+  <script src='/scripts/pt-br.js'></script>
+
+  <script>  
+
+    var atividades = [];
+    //var strAtividade = JSON.stringify(atividades);
+
+    $.getJSON("/agencias/<%= agencia._id %>/atividades", function (result) {
+      atividades = result;
+      $(document).ready(function () {
+
+        $('#calendar').fullCalendar({
+          header: {
+            left: 'prev,next,today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay,listWeek'
+          },
+          lang: 'pt',
+          navLinks: true, // can click day/week names to navigate views      
+          displayEventTime: false,
+          eventLimit: true, // allow "more" link when too many events
+          //defaultDate: '2018-12-12',
+          events: atividades //"http://localhost:3000/agencias/5a6c8c3fad33d414c47ead94/atividades"      
+
+        });
+      });
     });
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-    });
-  } 
 
+  </script>
 
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkG51lwJtDvYFKTBdRZlhzYg1D4QFsXPU&callback=initMap"></script>
-<!-- jQuery CDN -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-<!-- Custom JS for search feature -->
-<script src="/scripts/search.js" async defer></script>
-<!-- Bootstrap JS CDN -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-  crossorigin="anonymous"></script>
-<script src='/scripts/moment.min.js'></script>
-<script src='/scripts/jquery.min.js'></script>
-<script src='/scripts/fullcalendar.min.js'></script>
-<script src='/scripts/pt-br.js'></script>
-
-<script>  
-
-var atividades = [];
-//var strAtividade = JSON.stringify(atividades);
-
-$.getJSON("/agencias/<%= agencia._id %>/atividades", function(result){
-  atividades = result; 
-});
-   
-  $(document).ready(function () {
-
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'prev,next,today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay,listWeek'
-      },
-      lang: 'pt',      
-      navLinks: true, // can click day/week names to navigate views      
-      displayEventTime: false,
-      eventLimit: true, // allow "more" link when too many events
-      //defaultDate: '2018-12-12',
-      events:  atividades //"http://localhost:3000/agencias/5a6c8c3fad33d414c47ead94/atividades"      
-      
-    });
-  });  
-  
-</script>
-
-<% include ../partials/footer %>
+  <% include ../partials/footer %>
