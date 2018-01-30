@@ -39,7 +39,7 @@ router.post("/", isLoggedIn, function(req, res){
                atividade.save();
                agencia.atividades.push(atividade);           
                agencia.save();               
-               req.flash('success', 'Created a atividade!');
+               req.flash('success', 'Atividade criada com sucesso!');
                res.redirect('/agencias/' + agencia._id);
            }
         });        
@@ -79,7 +79,7 @@ router.delete("/:atividadeId", isLoggedIn, checkUserAtividade, function(req, res
             req.flash('error', err.message);
             return res.redirect('/');
           }
-          req.flash('error', 'Atividade deleted!');
+          req.flash('error', 'Atividade removida com sucesso!');
           res.redirect("/agencias/" + req.params.id);
         });
     }

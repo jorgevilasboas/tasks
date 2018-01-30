@@ -5,6 +5,7 @@ var atividadeSchema = mongoose.Schema({
     start: Date,
     end: Date,
     url: String,
+    km: Number,    
     createdAt: { type: Date, default: Date.now },
     author: {
         id: {

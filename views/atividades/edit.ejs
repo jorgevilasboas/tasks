@@ -14,6 +14,9 @@
                     <input class="form-control" type="datetime-local" value="<%= moment(atividade.end).utc(-3).format('YYYY-MM-DDTHH:mm:ss') %>" name="atividade[end]" placeholder="Título" required>
                 </div>
                 <div class="form-group">
+                    <input class="form-control" type="number" value="<%= atividade.km %>" name="atividade[km]" placeholder="Quilometragem">
+                </div>
+                <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Alterar</button>
                 </div>
             </form>
