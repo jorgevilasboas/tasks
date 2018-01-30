@@ -9,7 +9,7 @@
         <h4><a><%=agencia.name%></a></h4>
         <p><%= agencia.description %></p>
         <p>
-          <em>Submitted by: <%= agencia.author.username %>, <%= moment(agencia.createdAt).fromNow() %></em>
+          <em>Criado por: <%= agencia.author.username %> %></em>
         </p>
         <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
         <a class="btn btn-warning" href="/agencias/<%= agencia._id %>/edit">Edit</a>
@@ -107,13 +107,18 @@
 
 <script>  
 
-var atividades = {};
+var atividades = [];
 //var strAtividade = JSON.stringify(atividades);
 
 $.getJSON("/agencias/<%= agencia._id %>/atividades", function(result){
   atividades = result;
-  console.dir(atividades);
+  //console.dir(atividades);
 });
+
+ for(var i = 0 ; i< atividades.length; i++){
+  console.log(atividades[i]);  
+  //element.url = "/agencias/<%= agencia._id %>/atividades/" + element._id;
+ }
 
 //console.log(strAtividade);
   
@@ -121,16 +126,16 @@ $.getJSON("/agencias/<%= agencia._id %>/atividades", function(result){
 
     $('#calendar').fullCalendar({
       header: {
-        left: 'prev,next today',
+        left: 'prev,next,today',
         center: 'title',
         right: 'month,agendaWeek,agendaDay,listWeek'
       },
-      lang: 'pt',
-      defaultDate: '2018-12-12',
+      lang: 'pt',      
       navLinks: true, // can click day/week names to navigate views
       editable: true,
+      displayEventTime: false,
       eventLimit: true, // allow "more" link when too many events
-      
+      //defaultDate: '2018-12-12',
       events:  atividades //"http://localhost:3000/agencias/5a6c8c3fad33d414c47ead94/atividades"
       
       /*

@@ -100,7 +100,10 @@ router.get("/:id/atividades", function(req, res){
             console.log(err);
             req.flash('error', 'Sorry, that agencia does not exist!');
             return res.redirect('/agencias');
-        }        
+        }
+        foundAgencia.atividades.forEach(element => {
+            element.url = "/agencias/" + req.params.id + "/atividades/" + element._id + "/edit";
+        });
         //render show template with that agencia
         res.send(foundAgencia.atividades);
     });

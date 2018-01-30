@@ -25,7 +25,7 @@ router.post("/register", function(req, res){
             return res.render("register", {error: err.message});
         }
         passport.authenticate("local")(req, res, function(){
-           req.flash("success", "Successfully Signed Up! Nice to meet you " + req.body.username);
+           req.flash("success", "Usuario cadastrado com sucesso! Bem-vindo(a) " + req.body.username);
            res.redirect("/agencias"); 
         });
     });
@@ -49,7 +49,7 @@ router.post("/login", passport.authenticate("local",
 // logout route
 router.get("/logout", function(req, res){
    req.logout();
-   req.flash("success", "See you later!");
+   req.flash("success", "Até logo!");
    res.redirect("/agencias");
 });
 
