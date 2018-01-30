@@ -1,26 +1,26 @@
 <% include ../partials/header %>
     <div class="row">
-        <h1 style="text-align: center">Create a New Agencia</h1>
+        <h1 style="text-align: center">Cadastrar Agencia</h1>
         <div style="width: 30%; margin: 25px auto;">
             <form action="/agencias" method="POST">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input class="form-control" type="text" name="name" id="name" placeholder="Yosemite">
+                    <label for="name">Nome</label>
+                    <input class="form-control" type="text" name="name" id="name" placeholder="Nome da agência">
                 </div>
                 <div class="form-group">
-                    <label for="image">Image Url</label>
+                    <label for="image">Url da imagem</label>
                     <input class="form-control" type="text" name="image" id="image"  title="URL da imagem" placeholder="Cole o endereço da imagem aqui">                    
                 </div>                
                 <div class="form-group">
-                    <label for="location">Location</label>
-                    <input class="form-control" type="text" name="location" id="location" placeholder="Yosemite National Park, CA">
+                    <label for="location">Endereço</label>
+                    <input class="form-control" type="text" name="location" id="location" placeholder="Digite o endereço">
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
-                    <input class="form-control" type="text" name="description" id="description" placeholder="California’s Sierra Nevada mountains.">
+                    <label for="description">Descrição</label>
+                    <input class="form-control" type="text" name="description" id="description" placeholder="Descrição">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                    <button class="btn btn-lg btn-primary btn-block">Cadastrar</button>
                 </div>
             </form>
             <a href="/agencias">Voltar</a>

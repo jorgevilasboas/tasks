@@ -52,7 +52,7 @@ router.post("/", isLoggedIn, isSafe, function(req, res){
   
   geocoder.geocode(req.body.location, function (err, data) {
     if (err || data.status === 'ZERO_RESULTS') {
-      req.flash('error', 'Invalid address');
+      req.flash('error', 'Endereço Inválido');
       return res.redirect('back');
     }
     var lat = data.results[0].geometry.location.lat;
@@ -84,7 +84,7 @@ router.get("/:id", function(req, res){
     Agencia.findById(req.params.id).populate("atividades").exec(function(err, foundAgencia){
         if(err || !foundAgencia){
             console.log(err);
-            req.flash('error', 'Sorry, that agencia does not exist!');
+            req.flash('error', 'Desculpe, essa agência não existe');
             return res.redirect('/agencias');
         }
         console.log(foundAgencia)
@@ -127,7 +127,7 @@ router.put("/:id", isSafe, function(req, res){
             req.flash("error", err.message);
             res.redirect("back");
         } else {
-            req.flash("success","Successfully Updated!");
+            req.flash("success","Atualizado com sucesso!");
             res.redirect("/agencias/" + agencia._id);
         }
     });

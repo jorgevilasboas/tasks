@@ -17,11 +17,23 @@
                     <input class="form-control" type="number" value="<%= atividade.km %>" name="atividade[km]" placeholder="Quilometragem">
                 </div>
                 <div class="form-group">
+                        <select class="resource_type form-control" name="atividade[resource_type]">
+                                <option value="D">Diária</option>
+                                <option value="I">Indenização</option>                                
+                        </select>                    
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="number" step="0.01" name="atividade[resource_value]" value="<%= atividade.resource_value %>" placeholder="Valor">
+                </div>
+                <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Alterar</button>
                 </div>
             </form>
             <a href="/agencias">Voltar</a>
         </div>
     </div>
+    <script>
+        $("div.resource_type select").val("<%= atividade.resource_type %>");
+    </script>
 <% include ../partials/footer %>
 

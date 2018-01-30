@@ -4,24 +4,23 @@
         <div style="width: 30%; margin: 25px auto;">
             <form action="/agencias/<%=agencia._id%>?_method=PUT" method="POST">
                 <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">Nome</label>
                     <input class="form-control" type="text" name="name" id="name" value="<%= agencia.name %>">
                 </div>
                 <div class="form-group">
-                    <label for="image">Image Url</label>
-                    <input class="form-control" type="text" name="image" id="image" pattern="^https:\/\/images\.unsplash\.com\/.*" title="Only images from images.unsplash.com allowed. See link below for instructions." placeholder="https://images.unsplash.com/..." value="<%= agencia.image %>" required>
-                    <small>Click <a href="https://youtu.be/Bn3weNRQRDE">here</a> for tutorial on how to copy unsplash urls.</small>
+                    <label for="image">Url da Imagem</label>
+                    <input class="form-control" type="text" name="image" id="image" title="Endereço da imagem"  value="<%= agencia.image %>" required>
                 </div>                
                 <div class="form-group">
-                    <label for="location">Location</label>
+                    <label for="location">Endereço</label>
                     <input class="form-control" type="text" name="location" id="location" value="<%= agencia.location %>">
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">Descrição</label>
                     <input class="form-control" type="text" name="description" id="description" value="<%= agencia.description %>">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Update!</button>
+                    <button class="btn btn-lg btn-primary btn-block">Alterar</button>
                 </div>
             </form>
             <a href="/agencias">Voltar</a>
