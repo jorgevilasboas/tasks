@@ -84,7 +84,7 @@ router.get("/:id", function(req, res){
     Agencia.findById(req.params.id).populate("atividades").exec(function(err, foundAgencia){
         if(err || !foundAgencia){
             console.log(err);
-            req.flash('error', 'Desculpe, essa agência não existe');
+            req.flash('error', 'Desculpe, essa agência não existe.');
             return res.redirect('/agencias');
         }
         console.log(foundAgencia)
@@ -98,7 +98,7 @@ router.get("/:id/atividades", function(req, res){
     Agencia.findById(req.params.id).populate("atividades").exec(function(err, foundAgencia){
         if(err || !foundAgencia){
             console.log(err);
-            req.flash('error', 'Sorry, that agencia does not exist!');
+            req.flash('error', 'Desculpe, essa agência não existe.');
             return res.redirect('/agencias');
         }
         foundAgencia.atividades.forEach(element => {
@@ -119,6 +119,10 @@ router.get("/:id/edit", isLoggedIn, checkUserAgencia, function(req, res){
 // PUT - updates agencia in the database
 router.put("/:id", isSafe, function(req, res){
   geocoder.geocode(req.body.location, function (err, data) {
+    if (err || data.status === 'ZERO_RESULTS') {
+        req.flash('error', 'Endereço Inválido');
+        return res.redirect('back');
+    }  
     var lat = data.results[0].geometry.location.lat;
     var lng = data.results[0].geometry.location.lng;
     var location = data.results[0].formatted_address;
