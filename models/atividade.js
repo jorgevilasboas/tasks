@@ -5,6 +5,7 @@ var atividadeSchema = mongoose.Schema({
     start: Date,
     end: Date,
     url: String,
+    car: String,
     km: Number,
     resource_type: String,
     resource_value: Number,
