@@ -123,6 +123,7 @@
 
     $.getJSON("/agencias/<%= agencia._id %>/atividades", function (result) {
       atividades = result;
+      console.dir(atividades);
       $(document).ready(function () {
 
         $('#calendar').fullCalendar({
@@ -136,8 +137,7 @@
           displayEventTime: false,
           eventLimit: true, // allow "more" link when too many events
           //defaultDate: '2018-12-12',
-          events: atividades //"http://localhost:3000/agencias/5a6c8c3fad33d414c47ead94/atividades"      
-
+          events: atividades
         });
       });
     });
