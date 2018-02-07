@@ -17,6 +17,12 @@
                     <input class="form-control" type="number" value="<%= atividade.km %>" name="atividade[km]" placeholder="Quilometragem">
                 </div>
                 <div class="form-group">
+                    <input class="form-control" type="text" value="<%= atividade.car %>" name="atividade[car]" placeholder="Carro">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="color" value="<%= atividade.color %>" name="atividade[color]" placeholder="Cor">
+                </div>
+                <div class="form-group">
                     <fieldset>
                         <legend>Recursos:</legend>
                         <% let selected = ""; if(atividade.resource_type == "I") {selected = "selected"} %>
