@@ -28,6 +28,7 @@ router.post("/", isLoggedIn, function(req, res){
            res.redirect("/agencias");
        } else {
         Atividade.create(req.body.atividade, function(err, atividade){
+            console.log(req.body.atividade);
            if(err){
                console.log(err);
            } else {

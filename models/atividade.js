@@ -8,6 +8,7 @@ var atividadeSchema = mongoose.Schema({
     car: String,
     km: Number,
     color: String,
+    fields: [],
     resource_type: String,
     resource_value: Number,
     createdAt: { type: Date, default: Date.now },
