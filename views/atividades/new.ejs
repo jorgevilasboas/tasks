@@ -1,6 +1,31 @@
 <% include ../partials/header %>
+<script src='/scripts/jquery.min.js'></script>
+    <div class="container">
+        <div class="row">
+            <div class="control-group" id="fields">
+                <label class="control-label" for="field1">Nice Multiple Form Fields</label>
+                <div class="controls">
+                    <form role="form" autocomplete="off">
+                        <div class="entry input-group col-xs-3">
+                            <input class="form-control" name="fields[]" type="text" placeholder="Type something" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success btn-add" type="button">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                    <br>
+                    <small>Press
+                        <span class="glyphicon glyphicon-plus gs"></span> to add another form field :)</small>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
-        <h1 style="text-align: center">Cadastrar Atividade da Agência <%= agencia.name %></h1>
+        <h1 style="text-align: center">Cadastrar Atividade da Agência
+            <%= agencia.name %>
+        </h1>
         <div style="width: 30%; margin: 25px auto;">
             <form action="/agencias/<%= agencia._id %>/atividades" method="POST">
                 <div class="form-group">
@@ -22,11 +47,11 @@
                     <input class="form-control" type="color" name="atividade[color]" placeholder="Cor">
                 </div>
                 <div class="form-group">
-                        <select class="form-control" name="atividade[resource_type]">
-                                <option value="D">Diária</option>
-                                <option value="I">Indenização</option>                                
-                        </select>
-                        <input class="form-control" type="number" min="0" step="0.5" name="atividade[resource_value]" placeholder="Valor">
+                    <select class="form-control" name="atividade[resource_type]">
+                        <option value="D">Diária</option>
+                        <option value="I">Indenização</option>
+                    </select>
+                    <input class="form-control" type="number" min="0" step="0.5" name="atividade[resource_value]" placeholder="Valor">
                 </div>
 
                 <div class="form-group">
@@ -36,5 +61,29 @@
             <a href="/agencias">Voltar</a>
         </div>
     </div>
-<% include ../partials/footer %>
 
+    <script>
+        $(function () {
+            $(document).on('click', '.btn-add', function (e) {
+                e.preventDefault();
+
+                var controlForm = $('.controls form:first'),
+                    currentEntry = $(this).parents('.entry:first'),
+                    newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+                newEntry.find('input').val('');
+                controlForm.find('.entry:not(:last) .btn-add')
+                    .removeClass('btn-add').addClass('btn-remove')
+                    .removeClass('btn-success').addClass('btn-danger')
+                    .html('<span class="glyphicon glyphicon-minus"></span>');
+            }).on('click', '.btn-remove', function (e) {
+                $(this).parents('.entry:first').remove();
+
+                e.preventDefault();
+                return false;
+            });
+        });
+
+    </script>
+
+    <% include ../partials/footer %>
