@@ -1,8 +1,5 @@
 <% include ../partials/header %>
-    <script src='/scripts/jquery.min.js'></script>
-    <script>
-        var count = 0;
-    </script>
+    <script src='/scripts/jquery.min.js'></script>    
     <div class="container">
         <div class="row">
             <h1 style="text-align: center">Cadastrar Atividade da Agência
@@ -70,8 +67,7 @@
 
     <script>
         $(function () {
-            $(document).on('click', '.btn-add', function (e) {
-                count++;
+            $(document).on('click', '.btn-add', function (e) {                
                 e.preventDefault();
 
                 var controlForm = $('.controls form:first'),
@@ -83,10 +79,8 @@
                     .removeClass('btn-add').addClass('btn-remove')
                     .removeClass('btn-success').addClass('btn-danger')
                     .html('<span class="glyphicon glyphicon-minus"></span>');
-            }).on('click', '.btn-remove', function (e) {
-                count--;
+            }).on('click', '.btn-remove', function (e) {                
                 $(this).parents('.entry:first').remove();
-
                 e.preventDefault();
                 return false;
             });
