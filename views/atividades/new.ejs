@@ -34,7 +34,15 @@
                                 <option value="I">Indenização</option>
                             </select>
                         </div>
-                        <input class="form-control" type="number" min="0" step="0.5" name="atividade[resource_value]" placeholder="Valor">
+                        <input class="form-control" type="number" min="0" step="0.5" name="atividade[resource_value]" placeholder="Quantidade">
+                        <br>
+                        <div class="form-group">
+                                <select class="form-control" name="atividade[status]">
+                                    <option value="P">Planejada</option>
+                                    <option value="C">Cancelada</option>
+                                    <option value="F">Finalizada</option>
+                                </select>
+                            </div>
                         <br>
                         <label class="control-label" for="field1">Equipe:</label>                        
                         <div class="entry input-group">
@@ -49,20 +57,16 @@
                     <br>
                     <small>Aperte
                         <span class="glyphicon glyphicon-plus gs"></span> para adicionar</small>
+                        <br><br>
+                        <a href="/agencias">Voltar</a>
                 </div>
+                
             </div>
+            
         </div>
     </div>
     <div class="row">
-
-        <div>
-            <form>
-
-
-
-            </form>
-            <a href="/agencias">Voltar</a>
-        </div>
+        
     </div>
 
     <script>
