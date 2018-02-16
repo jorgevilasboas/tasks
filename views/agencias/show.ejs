@@ -2,7 +2,8 @@
   <div class="row">
     <div class="col-md-12">
       <div class="thumbnail">
-        <img class="img-responsive" src="<%= agencia.image %>">
+          
+        <!-- <img class="img-responsive" src="<%= agencia.image %>"> -->
         <div class="caption-full">
           <h4 class="pull-right">
           </h4>
@@ -11,6 +12,7 @@
               <%=agencia.name%>
             </a>
           </h4>
+          <div id='calendar'></div>
           <p>
             <%= agencia.description %>
           </p>
@@ -27,8 +29,15 @@
         </div>
       </div>
       <div class="row">
-        <div id='calendar'></div>
+        
       </div>
+      <div class="col-md-12">
+        <p class="lead"></p>
+        <div class="list-group">
+          <li class="list-group-item active">Atividades</li>
+        </div>        
+      </div>
+      
       <div class="well">
         <div class="text-right">
           <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
@@ -63,11 +72,9 @@
       </div>
     </div>
     <div class="col-md-12">
-      <p class="lead">Tasks</p>
+      <p class="lead"></p>
       <div class="list-group">
-        <li class="list-group-item active">Info 1</li>
-        <li class="list-group-item">Info 2</li>
-        <li class="list-group-item">Info 3</li>
+        <li class="list-group-item active">Localização</li>        
       </div>
       <div id="map"></div>
     </div>
