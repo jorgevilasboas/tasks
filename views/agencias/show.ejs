@@ -13,12 +13,13 @@
             </a>
           </h4>
           <div id='calendar'></div>
+          <br>
           <p>
             <%= agencia.description %>
-          </p>
+          </p>          
           <p>
             <em>Criado por:
-              <%= agencia.author.username %> %></em>
+              <%= agencia.author.username %></em>
           </p>
           <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
             <a class="btn btn-warning" href="/agencias/<%= agencia._id %>/edit">Edit</a>
@@ -28,6 +29,7 @@
             <% } %>
         </div>
       </div>
+      <!--
       <div class="row">
         
       </div>
@@ -70,6 +72,7 @@
             </div>
             <% }) %>
       </div>
+    -->
     </div>
     <div class="col-md-12">
       <p class="lead"></p>
