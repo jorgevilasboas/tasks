@@ -75,11 +75,6 @@ app.use("/", indexRoutes);
 app.use("/agencias", agenciaRoutes);
 app.use("/agencias/:id/atividades", atividadeRoutes);
 app.use(errorhandler())
-//second arg process.env.IP
-/*app.listen(PORT, "localhost",  function(){
-   console.log("The YelpCamp Server Has Started!");
-});
-*/
 
 app.listen(PORT, function () {
     console.log('Server listening on port ' + PORT );

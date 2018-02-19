@@ -134,8 +134,7 @@
     //var strAtividade = JSON.stringify(atividades);
 
     $.getJSON("/agencias/<%= agencia._id %>/atividades", function (result) {
-      atividades = result;
-      console.dir(atividades);
+      atividades = result;      
       $(document).ready(function () {
 
         $('#calendar').fullCalendar({

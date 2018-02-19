@@ -158,8 +158,8 @@ router.delete("/:id", isLoggedIn, checkUserAgencia, function(req, res) {
                 req.flash('error', err.message);
                 return res.redirect('/');
             }
-            req.flash('error', 'Agencia removida com sucesso!');
-            res.redirect('/agencias');
+            req.flash('error', 'Agencia removida com sucesso!');            
+            res.redirect('/agencias/');
           });
       }
     })
