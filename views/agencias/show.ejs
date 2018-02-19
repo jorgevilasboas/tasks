@@ -22,6 +22,8 @@
               <%= agencia.author.username %></em>
           </p>
           <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+            <a class="btn btn-success" href="/agencias/<%= agencia._id %>/relatorios">Relatorios</a>
+            <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
             <a class="btn btn-warning" href="/agencias/<%= agencia._id %>/edit">Edit</a>
             <form action="/agencias/<%= agencia._id %>?_method=DELETE" method="POST" class="delete-form">
               <button class="btn btn-danger">Delete</button>

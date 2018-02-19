@@ -42,10 +42,7 @@
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               <li class="<%= typeof page !== 'undefined' && page === 'agencias' ? 'active' : '' %>"><a href="/agencias">Agências</a></li>
-            </ul>            
-            <ul class="nav navbar-nav">
-                <li class="<%= typeof page !== 'undefined' && page === 'equipes' ? 'active' : '' %>"><a href="/equipes">Equipes</a></li>
-            </ul>            
+            </ul>                        
             <ul class="nav navbar-nav navbar-right">
                 <% if(!currentUser){ %>
                     <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login">Login</a></li>                    
@@ -53,7 +50,7 @@
                 <% } else { %>
                     <li><a href="#">Usuario logado: <%= currentUser.username %></a></li>
                     <% if(currentUser.username == 'elvis'){ %>
-                      <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a> </li>
+                      <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Cadastrar Usuario</a> </li>
                     <% } %>
                     <li><a href="/logout">Sair</a></li>
                 <% } %>

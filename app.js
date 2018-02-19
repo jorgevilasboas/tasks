@@ -24,7 +24,9 @@ var PORT = process.env.PORT || 3000;
 //requiring routes
 var atividadeRoutes    = require("./routes/atividades"),
     agenciaRoutes = require("./routes/agencias"),
-    indexRoutes      = require("./routes/index")
+    indexRoutes      = require("./routes/index"),
+    relatoriosRoutes = require("./routes/")
+
     
 // assign mongoose promise library and connect to database
 mongoose.Promise = global.Promise;

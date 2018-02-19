@@ -165,5 +165,23 @@ router.delete("/:id", isLoggedIn, checkUserAgencia, function(req, res) {
     })
 });
 
+// SHOW - shows more info about one agencia
+router.get("/:id/relatorios", function(req, res){
+    var atividades = [];
+    //find the agencia with provided ID
+    Agencia.findById(req.params.id).populate("atividades").exec(function(err, foundAgencia){
+        if(err || !foundAgencia){
+            console.log(err);
+            req.flash('error', 'Desculpe, essa agência não existe.');
+            return res.redirect('/agencias');
+        }
+        console.log(foundAgencia)
+        //render show template with that agencia
+        res.render("agencias/relatorios", {agencia: foundAgencia, atividades: atividades});
+    });
+});
+
+
+
 module.exports = router;
 

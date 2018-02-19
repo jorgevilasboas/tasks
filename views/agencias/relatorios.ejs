@@ -1,0 +1,93 @@
+<% include ../partials/header %>
+
+<!--
+    nome atividade
+    inicial 
+    final
+    veículo
+    tipo recurso
+    quantidade
+    status - Planejada, Finalizada e Cancelada
+
+title:String,
+start:Date,
+end:Date,
+url:String,
+car:String,
+km:Number,
+color:String,
+status:String,
+fields: [],
+resource_type:String,
+resource_value:Number,
+
+-->
+
+    <table class="table table-hover table-striped col-lg-10">
+        <tbody>
+            <tr style="background-color: rgb(16, 155, 219);color: white;">                
+                <th>Atividade</th>
+                <th>Data Inicial</th>
+                <th>Data Final</th>
+                <th>Veículo</th>
+                <th>Quilometragem</th>
+                <th>Tipo Recurso</th>
+                <th>Quantidade</th>
+                <th>Status</th>
+                <th>Operação</th>
+            </tr>
+            <% agencia.atividades.forEach(function(atividade){ %>
+                <% atividades.push(atividade)%>
+            <tr>
+                <td><%= atividade.title %></td>
+                <td><%= atividade.start %></td>
+                <td><%= atividade.end %></td>
+                <td><%= atividade.car %></td>
+                <td><%= atividade.km %></td>                
+                <td><%= atividade.resource_type %></td>
+                <td><%= atividade.resource_value %></td>
+                <td><%= atividade.status %></td>
+                <td>
+                    <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %> 
+                    <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning glyphicon glyphicon-pencil"></a>
+                        <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-xs glyphicon btn-danger glyphicon-trash"></button>
+                        </form>
+                    <% } else {%>
+                    Ureia seca
+                    <% } %>
+                </td>
+            </tr>
+            <% }) %>            
+        </tbody>
+    </table>
+
+    <div class="well">
+        <hr>
+        <% agencia.atividades.forEach(function(atividade){ %>
+            <% atividades.push(atividade)%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>
+                            <%= atividade.author.username %>
+                        </strong>
+                        <span class="pull-right">
+                            <%= moment(atividade.createdAt).fromNow() %>
+                        </span>
+                        <div>
+                            <%= atividade.title %>
+
+                                <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                    <div class="pull-right">
+                                        
+                                    </div>
+                                    <% } %>
+                                        <hr>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+    </div>
+
+
+    <% include ../partials/footer %>
