@@ -5,10 +5,11 @@
                 <th>Atividade</th>
                 <th>Data / Hora Inicial</th>
                 <th>Data / Hora Final</th>
+                <th>Equipe</th>
                 <th>Veículo</th>
-                <th>Quilometragem</th>
-                <th>Tipo Recurso</th>
-                <th>Quantidade</th>
+                <th>Km</th>
+                <th>Recurso</th>
+                <th>Qtde</th>
                 <th>Status</th>
                 <th>Operação</th>
             </tr>
@@ -18,6 +19,7 @@
                 <td><%= atividade.title %></td>
                 <td><%=moment(atividade.start).utc(-3).format('DD/MM/YYYY HH:mm') %></td>
                 <td><%=moment(atividade.end).utc(-3).format('DD/MM/YYYY HH:mm') %></td>
+                <td><%= atividade.fields %></td>
                 <td><%= atividade.car %></td>
                 <td><%= atividade.km %></td>                
                 <td><% if(atividade.resource_type == 'D') { %>

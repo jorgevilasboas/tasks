@@ -16,7 +16,7 @@ function seedDB(){
         if(err){
             console.log(err);
         }
-        console.log("removed agencias!");
+        //console.log("removed agencias!");
          //add a few agencias
         data.forEach(function(seed){
             Agencia.create(seed, function(err, agencia){
