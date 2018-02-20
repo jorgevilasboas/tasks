@@ -4,14 +4,17 @@
       <div class="thumbnail">
           
         <!-- <img class="img-responsive" src="<%= agencia.image %>"> -->
-        <div class="caption-full">
+        <div class="caption-full">          
+            <p style="text-align: right">
+                <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>            
+                  <a class="btn btn-success" href="/agencias/<%= agencia._id %>/relatorios">Relatorios</a>
+                  <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
+                <% } %>
+            </p>
           <h4 class="pull-right">
+            
           </h4>
-          <h4>
-            <a>
-              <%=agencia.name%>
-            </a>
-          </h4>
+          <br>
           <div id='calendar'></div>
           <br>
           <p>
@@ -21,60 +24,14 @@
             <em>Criado por:
               <%= agencia.author.username %></em>
           </p>
-          <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-            <a class="btn btn-success" href="/agencias/<%= agencia._id %>/relatorios">Relatorios</a>
-            <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
+          <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>            
             <a class="btn btn-warning" href="/agencias/<%= agencia._id %>/edit">Edit</a>
             <form action="/agencias/<%= agencia._id %>?_method=DELETE" method="POST" class="delete-form">
               <button class="btn btn-danger">Delete</button>
             </form>
-            <% } %>
+          <% } %>
         </div>
-      </div>
-      <!--
-      <div class="row">
-        
-      </div>
-      <div class="col-md-12">
-        <p class="lead"></p>
-        <div class="list-group">
-          <li class="list-group-item active">Atividades</li>
-        </div>        
-      </div>
-      
-      <div class="well">
-        <div class="text-right">
-          <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
-        </div>
-        <hr>
-        <% agencia.atividades.forEach(function(atividade){ %>
-          <% atividades.push(atividade)%>
-            <div class="row">
-              <div class="col-md-12">
-                <strong>
-                  <%= atividade.author.username %>
-                </strong>
-                <span class="pull-right">
-                  <%= moment(atividade.createdAt).fromNow() %>
-                </span>
-                <div>
-                  <%= atividade.title %>
-
-                    <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
-                      <div class="pull-right">
-                        <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning">EDIT</a>
-                        <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE" method="POST">
-                          <button class="btn btn-xs btn-danger">DELETE</button>
-                        </form>
-                      </div>
-                      <% } %>
-                        <hr>
-                </div>
-              </div>
-            </div>
-            <% }) %>
-      </div>
-    -->
+      </div>      
     </div>
     <div class="col-md-12">
       <p class="lead"></p>
