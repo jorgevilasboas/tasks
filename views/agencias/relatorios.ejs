@@ -30,7 +30,13 @@
                 </td>
                 <td><%= atividade.resource_value %></td>
                 <td>
-                    <%= atividade.status %>
+                    <% if(atividade.status == 'P') { %>
+                        <%= "Planejada" %>
+                    <% } else if (atividade.status == 'C') { %>
+                        <%= "Cancelada" %>
+                    <% } else if (atividade.status == 'F') { %>
+                        <%= "Finalizada" %>
+                    <% } %>
                 </td>
                 <td>
                     <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %> 
