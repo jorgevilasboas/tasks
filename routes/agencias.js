@@ -181,6 +181,26 @@ router.get("/:id/relatorios", function(req, res){
     });
 });
 
+router.post("/:id/relatorios", function (req, res) {    
+    var filter = 'atividades';
+    var name = req.body.name;
+    if (name != '') {
+        filter = { path: 'atividades',
+                    match: { fields: { $in: [name] }}
+                  }
+    }
+    //find the agencia with provided ID  
+    Agencia.findById(req.params.id).populate(filter).exec(function (err, foundAgencia) {
+        if (err || !foundAgencia) {
+            console.log(err);
+            req.flash('error', 'Desculpe, essa agência não existe.');
+            return res.redirect('/agencias');
+        }
+        console.log(foundAgencia)
+        //render show template with that agencia
+        res.render("agencias/relatorios", { agencia: foundAgencia, name: name });
+    });
+});
 
 
 module.exports = router;

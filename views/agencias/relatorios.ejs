@@ -1,7 +1,16 @@
 <% include ../partials/header %>
+    <form action="/agencias/<%=agencia._id%>/relatorios" method="POST">
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <input class="form-control" type="text" value="<%= typeof name !== 'undefined' ? name : '' %>" name="name" id="name" placeholder="Nome da agência">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-lg btn-primary btn-block">Pesquisar</button>
+        </div>
+    </form>
     <table class="table table-hover table-striped col-lg-10">
         <tbody>
-            <tr style="background-color: rgb(16, 155, 219);color: white;">                
+            <tr style="background-color: rgb(6, 116, 167);color: white;">
                 <th>Atividade</th>
                 <th>Data / Hora Inicial</th>
                 <th>Data / Hora Final</th>
@@ -13,45 +22,75 @@
                 <th>Status</th>
                 <th>Operação</th>
             </tr>
-            <% agencia.atividades.forEach(function(atividade){ %>
-                <% atividades.push(atividade)%>
-            <tr>
-                <td><%= atividade.title %></td>
-                <td><%=moment(atividade.start).utc(-3).format('DD/MM/YYYY HH:mm') %></td>
-                <td><%=moment(atividade.end).utc(-3).format('DD/MM/YYYY HH:mm') %></td>
-                <td><%= atividade.fields %></td>
-                <td><%= atividade.car %></td>
-                <td><%= atividade.km %></td>                
-                <td><% if(atividade.resource_type == 'D') { %>
-                    <%= "Diária" %>
-                    <% } else if (atividade.resource_type == 'I') { %>
-                    <%= "Idenização" %>
-                    <% } %>
-                </td>
-                <td><%= atividade.resource_value %></td>
-                <td>
-                    <% if(atividade.status == 'P') { %>
-                        <%= "Planejada" %>
-                    <% } else if (atividade.status == 'C') { %>
-                        <%= "Cancelada" %>
-                    <% } else if (atividade.status == 'F') { %>
-                        <%= "Finalizada" %>
-                    <% } %>
-                </td>
-                <td>
-                    <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %> 
-                    <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning glyphicon glyphicon-pencil"></a>
-                        <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE&action=relatorios" method="POST">
-                            <input type='hidden' name='action' value='relatorios'>
-                            <button class="btn btn-xs glyphicon btn-danger glyphicon-trash"></button>
-                        </form>
-                    <% } else {%>
-                    Ureia seca
-                    <% } %>
-                </td>
-            </tr>
-            <% }) %>            
+            <% let kmTotal = 0 %>
+                <% let qtdeTotal = 0 %>
+                    <% agencia.atividades.forEach(function(atividade){ %>
+                        <% kmTotal += atividade.km %>
+                            <% qtdeTotal += atividade.resource_value %>
+                                <tr>
+                                    <td>
+                                        <%= atividade.title %>
+                                    </td>
+                                    <td>
+                                        <%=moment(atividade.start).utc(-3).format('DD/MM/YYYY HH:mm') %>
+                                    </td>
+                                    <td>
+                                        <%=moment(atividade.end).utc(-3).format('DD/MM/YYYY HH:mm') %>
+                                    </td>
+                                    <td>
+                                        <%= atividade.fields %>
+                                    </td>
+                                    <td>
+                                        <%= atividade.car %>
+                                    </td>
+                                    <td>
+                                        <%= atividade.km %>
+                                    </td>
+                                    <td>
+                                        <% if(atividade.resource_type == 'D') { %>
+                                            <%= "Diária" %>
+                                                <% } else if (atividade.resource_type == 'I') { %>
+                                                    <%= "Idenização" %>
+                                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <%= atividade.resource_value %>
+                                    </td>
+                                    <td>
+                                        <% if(atividade.status == 'P') { %>
+                                            <%= "Planejada" %>
+                                                <% } else if (atividade.status == 'C') { %>
+                                                    <%= "Cancelada" %>
+                                                        <% } else if (atividade.status == 'F') { %>
+                                                            <%= "Finalizada" %>
+                                                                <% } %>
+                                    </td>
+                                    <td>
+                                        <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                            <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning glyphicon glyphicon-pencil"></a>
+                                            <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE&action=relatorios"
+                                                method="POST">
+                                                <input type='hidden' name='action' value='relatorios'>
+                                                <button class="btn btn-xs glyphicon btn-danger glyphicon-trash"></button>
+                                            </form>
+                                            <% } else {%>
+                                                Ureia seca
+                                                <% } %>
+                                    </td>
+                                </tr>
+                                <% }) %>
         </tbody>
     </table>
 
-<% include ../partials/footer %>
+
+        <h4>
+        <p class="text-warning" align="center">
+            Km Total:   <%= kmTotal %>                    
+            Qtde Total: <%= qtdeTotal %>
+        </p>
+        </h4>   
+
+
+
+
+    <% include ../partials/footer %>
