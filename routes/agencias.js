@@ -185,8 +185,9 @@ router.post("/:id/relatorios", function (req, res) {
     var filter = 'atividades';
     var name = req.body.name;
     if (name != '') {
-        filter = { path: 'atividades',
-                    match: { fields: { $in: [name] }}
+        filter = { path: 'atividades',                   
+                   match: { fields: { $in: [ new RegExp(name, "i") ] }},
+                   options: {sort:{start: "descending"}}
                   }
     }
     //find the agencia with provided ID  
@@ -196,7 +197,7 @@ router.post("/:id/relatorios", function (req, res) {
             req.flash('error', 'Desculpe, essa agência não existe.');
             return res.redirect('/agencias');
         }
-        console.log(foundAgencia)
+
         //render show template with that agencia
         res.render("agencias/relatorios", { agencia: foundAgencia, name: name });
     });

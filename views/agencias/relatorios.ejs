@@ -29,6 +29,7 @@
                             <% qtdeTotal += atividade.resource_value %>
                                 <tr>
                                     <td>
+                                        <i class="btn btn-xs btn-warning glyphicon glyphicon-alert"></i>
                                         <%= atividade.title %>
                                     </td>
                                     <td>
@@ -83,12 +84,14 @@
     </table>
 
 
-        <h4>
+    <h4>        
         <p class="text-warning" align="center">
-            Km Total:   <%= kmTotal %>                    
-            Qtde Total: <%= qtdeTotal %>
+            Km: <%= kmTotal %>
         </p>
-        </h4>   
+        <p class="text-warning" align="center">
+            Qtde: <%= qtdeTotal %>
+        </p>
+    </h4>
 
 
 
