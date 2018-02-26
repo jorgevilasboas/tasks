@@ -75,7 +75,7 @@
                                                                 <% } %>
                                     </td>
                                     <td>
-                                        <% if(currentUser && atividade.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                        <% if(currentUser && atividade.author.id.equals(currentUser._id)){ %>
                                             <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning glyphicon glyphicon-pencil"></a>
                                             <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE&action=relatorios"
                                                 method="POST">
@@ -83,7 +83,9 @@
                                                 <button class="btn btn-xs glyphicon btn-danger glyphicon-trash"></button>
                                             </form>
                                             <% } else {%>
+                                            <%= atividade.author.id %>
                                                 Ureia seca
+                                            <%= currentUser._id %>
                                                 <% } %>
                                     </td>
                                 </tr>

@@ -176,7 +176,7 @@ router.get("/:id/relatorios", function(req, res){
                   }
     var atividades = [];
     //find the agencia with provided ID
-    Agencia.findById(req.params.id).populate("atividades").exec(function(err, foundAgencia){
+    Agencia.findById(req.params.id).populate(filter).exec(function(err, foundAgencia){
         if(err || !foundAgencia){
             console.log(err);
             req.flash('error', 'Desculpe, essa agência não existe.');
@@ -193,10 +193,16 @@ router.post("/:id/relatorios", function (req, res) {
     var name = req.body.name;
     var start = req.body.start;
     var end = req.body.end;
-    if (name != 'abc') {
+    console.log('START: ', start);
+    if (start != '') {
         filter = { path: 'atividades',                   
                    match: { fields: { $in: [ new RegExp(name, "i") ] },
                             start: {$gte: start, $lte: end} },
+                   options: {sort:{start: "ascending"}}
+                  }
+    } else {
+        filter = { path: 'atividades',                   
+                   match: { fields: { $in: [ new RegExp(name, "i") ] } },
                    options: {sort:{start: "ascending"}}
                   }
     }
@@ -209,7 +215,7 @@ router.post("/:id/relatorios", function (req, res) {
         }
 
         //render show template with that agencia
-        res.render("agencias/relatorios", { agencia: foundAgencia, name: name });
+        res.render("agencias/relatorios", { agencia: foundAgencia, name: name, start: start, end: end });
     });
 });
 

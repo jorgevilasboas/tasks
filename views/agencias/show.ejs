@@ -5,8 +5,9 @@
           
         <!-- <img class="img-responsive" src="<%= agencia.image %>"> -->
         <div class="caption-full">          
-            <p style="text-align: right">
-                <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>            
+            <p style="text-align: right">            
+                <!-- || currentUser && currentUser.isAdmin -->
+                <% if(currentUser && agencia.author.id.equals(currentUser._id) ){ %>                            
                   <a class="btn btn-success" href="/agencias/<%= agencia._id %>/relatorios">Relatorios</a>
                   <a class="btn btn-success" href="/agencias/<%= agencia._id %>/atividades/new">Cadastrar Atividade</a>
                 <% } %>
@@ -24,7 +25,12 @@
             <em>Criado por:
               <%= agencia.author.username %></em>
           </p>
-          <% if(currentUser && agencia.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>            
+          <% if(currentUser && agencia.author.id.equals(currentUser._id)){ %>
+            
+            <% console.log(currentUser._id) %>            
+              <% console.log(agencia.author.id) %>            
+                <% console.log(currentUser.isAdmin) %>                              
+
             <a class="btn btn-warning" href="/agencias/<%= agencia._id %>/edit">Edit</a>
             <form action="/agencias/<%= agencia._id %>?_method=DELETE" method="POST" class="delete-form">
               <button class="btn btn-danger">Delete</button>
