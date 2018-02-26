@@ -55,6 +55,7 @@ router.post("/", isLoggedIn, isSafe, function(req, res){
       req.flash('error', 'Endereço Inválido');
       return res.redirect('back');
     }
+    console.log(data.results[0]);
     var lat = data.results[0].geometry.location.lat;
     var lng = data.results[0].geometry.location.lng;
     var location = data.results[0].formatted_address;
@@ -167,6 +168,12 @@ router.delete("/:id", isLoggedIn, checkUserAgencia, function(req, res) {
 
 // SHOW - shows more info about one agencia
 router.get("/:id/relatorios", function(req, res){
+    var filter = 'atividades';
+    var name = req.body.name;
+    filter = { path: 'atividades',                   
+                   match: { fields: { $in: [ new RegExp(name, "i") ] } },
+                   options: {sort:{start: "ascending"}}
+                  }
     var atividades = [];
     //find the agencia with provided ID
     Agencia.findById(req.params.id).populate("atividades").exec(function(err, foundAgencia){
@@ -184,10 +191,13 @@ router.get("/:id/relatorios", function(req, res){
 router.post("/:id/relatorios", function (req, res) {    
     var filter = 'atividades';
     var name = req.body.name;
-    if (name != '') {
+    var start = req.body.start;
+    var end = req.body.end;
+    if (name != 'abc') {
         filter = { path: 'atividades',                   
-                   match: { fields: { $in: [ new RegExp(name, "i") ] }},
-                   options: {sort:{start: "descending"}}
+                   match: { fields: { $in: [ new RegExp(name, "i") ] },
+                            start: {$gte: start, $lte: end} },
+                   options: {sort:{start: "ascending"}}
                   }
     }
     //find the agencia with provided ID  
