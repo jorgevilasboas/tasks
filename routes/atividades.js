@@ -40,7 +40,8 @@ router.post("/", isLoggedIn, function (req, res) {
                     agencia.atividades.push(atividade);
                     agencia.save();
                     req.flash('success', 'Atividade criada com sucesso!');
-                    res.redirect('/agencias/' + agencia._id);
+                    res.render('atividades/new', {agencia: agencia, atividade:req.body.atividade});
+                    //res.redirect('/agencias/' + agencia._id);
                 }
             });
         }

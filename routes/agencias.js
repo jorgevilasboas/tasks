@@ -126,7 +126,12 @@ router.put("/:id", isSafe, function(req, res){
     if (err || data.status === 'ZERO_RESULTS') {
         req.flash('error', 'Endereço Inválido');
         return res.redirect('back');
-    }  
+    }
+    if (!data && !data.results) {
+        req.flash('error', 'Não foi possivel obter o endereço. Tente novamente mais tarde.');
+        return res.redirect('back');
+    }    
+    
     var lat = data.results[0].geometry.location.lat;
     var lng = data.results[0].geometry.location.lng;
     var location = data.results[0].formatted_address;
@@ -140,6 +145,7 @@ router.put("/:id", isSafe, function(req, res){
             res.redirect("/agencias/" + agencia._id);
         }
     });
+
   });
 });
 
@@ -166,7 +172,7 @@ router.delete("/:id", isLoggedIn, checkUserAgencia, function(req, res) {
     })
 });
 
-// SHOW - shows more info about one agencia
+// Relatorios
 router.get("/:id/relatorios", function(req, res){
     var filter = 'atividades';
     var name = req.body.name;
@@ -193,11 +199,13 @@ router.post("/:id/relatorios", function (req, res) {
     var name = req.body.name;
     var start = req.body.start;
     var end = req.body.end;
-    console.log('START: ', start);
+    let formatedEnd = req.body.end.toString()
+    console.log('end: ', end);
     if (start != '') {
         filter = { path: 'atividades',                   
                    match: { fields: { $in: [ new RegExp(name, "i") ] },
-                            start: {$gte: start, $lte: end} },
+                            start: {$gte: start, $lte: end}                            
+                         },                            
                    options: {sort:{start: "ascending"}}
                   }
     } else {

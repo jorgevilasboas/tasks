@@ -11,22 +11,26 @@
                         <button class="btn btn-lg btn-primary btn-block">Cadastrar</button>
                         <br>
                         <div class="form-group">
-                            <input class="form-control" type="text" name="atividade[title]" placeholder="Título">
+                            <input class="form-control" type="text" 
+                            value="<%= typeof atividade !== 'undefined' ? atividade.title : '' %>" name="atividade[title]" placeholder="Título">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="datetime-local" name="atividade[start]" placeholder="Data Início">
+                            <input class="form-control" type="datetime-local"
+                            value="<%= typeof atividade !== 'undefined' ? moment(atividade.start).utc(-3).format('YYYY-MM-DDTHH:mm:ss') : '' %>"
+                            name="atividade[start]" placeholder="Data Início">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="datetime-local" name="atividade[end]" placeholder="Data Fim">
+                            <input class="form-control" type="datetime-local"
+                            value="<%= typeof atividade !== 'undefined' ? moment(atividade.end).utc(-3).format('YYYY-MM-DDTHH:mm:ss') : '' %>"  name="atividade[end]" placeholder="Data Fim">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="number" name="atividade[km]" placeholder="Quilometragem">
+                            <input class="form-control" type="number" value="<%= typeof atividade !== 'undefined' ? atividade.km : '' %>" name="atividade[km]" placeholder="Quilometragem">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="text" name="atividade[car]" placeholder="Placa do carro">
+                            <input class="form-control" type="text" value="<%= typeof atividade !== 'undefined' ? atividade.car : '' %>" name="atividade[car]" placeholder="Placa do carro">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="color" name="atividade[color]" placeholder="Cor">
+                            <input class="form-control" type="color" value="<%= typeof atividade !== 'undefined' ? atividade.color : '' %>" name="atividade[color]" placeholder="Cor">
                         </div>
                         <div class="form-group">
                             <select class="form-control" name="atividade[resource_type]">
