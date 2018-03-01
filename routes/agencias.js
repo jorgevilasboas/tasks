@@ -218,12 +218,16 @@ router.post("/:id/relatorios", function (req, res) {
     var name = req.body.name;
     var start = req.body.start;
     var end = req.body.end;
-    let formatedEnd = req.body.end.toString()
+    var filterStart = new Date(start.substr(0,4), start.substr(5,2) - 1, start.substr(8,2) , 0, 0, 0, 0);
+    var filterEnd = new Date(end.substr(0,4), end.substr(5,2) -1, end.substr(8,2) , 23, 59, 59, 999);
+    //start.setHours(0,0,0,0);
+    
+    //end.setHours(23,59,59,999);
     console.log('end: ', end);
     if (start != '') {
         filter = { path: 'atividades',                   
                    match: { fields: { $in: [ new RegExp(name, "i") ] },
-                            start: {$gte: start, $lte: end}                            
+                            start: {$gte: filterStart, $lte: filterEnd}                            
                          },                            
                    options: {sort:{start: "ascending"}}
                   }
