@@ -4,12 +4,31 @@ var Agencia = require("../models/agencia");
 var Atividade = require("../models/atividade");
 var middleware = require("../middleware");
 var geocoder = require('geocoder');
+var googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyDinjRMvDF5NiwP_krdMj1VYDHw_3b7whE'
+  });
 var { isLoggedIn, checkUserAgencia, checkUserAtividade, isAdmin, isSafe } = middleware; // destructuring assignment
 
 // Define escapeRegex function for search feature
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
+
+router.get("/teste", function(req, res){
+      // Geocode an address.
+googleMapsClient.geocode({
+    address: 'Lagarto, Sergipe'
+  }, function(err, response) {
+    if (!err) {
+      console.log(response.json.results);
+      res.send(response.json.results)
+    }
+    else {
+        console.log(err);
+        res.send(err);
+    }
+  });
+});
 
 //INDEX - show all agencias
 router.get("/", function(req, res){
