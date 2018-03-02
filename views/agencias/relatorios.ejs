@@ -37,7 +37,18 @@
                             <% qtdeTotal += atividade.resource_value %>
                                 <tr>
                                     <td>
-                                        <i class="btn btn-xs btn-warning glyphicon glyphicon-alert"></i>
+                                        <% let now = Date.now() %>
+                                          
+                                        <% let timeDiff = atividade.end.getTime() - now; %>
+                                        <% let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); %>                                                                             
+                                        
+                                        <% if (diffDays < 0 ) { %>
+                                            <span class="label label-danger ">&nbsp;</span>
+                                        <% } else if (diffDays >= 0 && diffDays <=5 ) {%>
+                                            <span class="label label-warning">&nbsp;</span>
+                                        <% } else { %>
+                                            <span class="label label-success">&nbsp;</span>
+                                        <% } %>
                                         <%= atividade.title %>
                                     </td>
                                     <td>
@@ -70,6 +81,8 @@
                                             <%= "Planejada" %>
                                                 <% } else if (atividade.status == 'C') { %>
                                                     <%= "Cancelada" %>
+                                                    <% } else if (atividade.status == 'E') { %>
+                                                        <%= "Em Andamento" %>
                                                         <% } else if (atividade.status == 'F') { %>
                                                             <%= "Finalizada" %>
                                                                 <% } %>
