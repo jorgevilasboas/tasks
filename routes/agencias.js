@@ -122,7 +122,7 @@ router.get("/:id/atividades", function(req, res){
             return res.redirect('/agencias');
         }
         foundAgencia.atividades.forEach(element => {
-            element.url = "/agencias/" + req.params.id + "/atividades/" + element._id + "/edit";            
+            element.url = "/agencias/" + req.params.id + "/atividades/" + element._id + "/view";            
             /*if (element.km != 0 ){
                 console.log(element.km);
                 element.color = 'red';

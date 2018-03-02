@@ -1,0 +1,44 @@
+<% include ../partials/header %>
+    <div class="row">
+        <h1 style="text-align: center">Atividade</h1>
+        <div style="width: 30%; margin: 25px auto;">
+            <form action="/agencias/<%= agencia_id %>/atividades/<%=atividade._id %>?_method=PUT" method="POST">                
+                <div class="form-group">
+                    <input class="form-control" type="text" value="<%=atividade.title %>" name="atividade[title]" placeholder="Título" readonly>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="datetime-local" value="<%=moment(atividade.start).utc(-3).format('YYYY-MM-DDTHH:mm:ss') %>" name="atividade[start]" placeholder="Título" readonly>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="datetime-local" value="<%= moment(atividade.end).utc(-3).format('YYYY-MM-DDTHH:mm:ss') %>" name="atividade[end]" placeholder="Título" readonly>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="number" value="<%= atividade.km %>" name="atividade[km]" placeholder="Quilometragem" readonly>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" value="<%= atividade.car %>" name="atividade[car]" placeholder="Carro" readonly>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="color" value="<%= atividade.color %>" name="atividade[color]" placeholder="Cor" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <% let e = ""; if(atividade.status == "E") {e = "selected"}; %>
+                    <% let c = ""; if(atividade.status == "C") {c = "selected"}; %>
+                    <% let f = ""; if(atividade.status == "F") {f = "selected"}; %>
+                    <select class="form-control" name="atividade[status]" disabled>
+                        <option value="P">Planejada</option>
+                        <option value="E" <%= e %> > Em Andamento</option>
+                        <option value="C" <%= c %> > Cancelada</option>
+                        <option value="F" <%= f %> > Finalizada</option>
+                    </select>
+                </div>                                
+                <div class="form-group">
+                    <input class="form-control" type="text" value="<%=atividade.fields %>" name="atividade[fields]" placeholder="Título" readonly>
+                </div>
+            </form>
+            <a href="/agencias/<%= agencia_id %>">Voltar</a>
+        </div>
+    </div>    
+<% include ../partials/footer %>
+

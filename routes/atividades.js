@@ -52,6 +52,19 @@ router.get("/:atividadeId/edit", isLoggedIn, checkUserAtividade, function (req, 
     res.render("atividades/edit", { agencia_id: req.params.id, atividade: req.atividade });
 });
 
+router.get("/:atividadeId/view", function (req, res) {
+    Atividade.findById(req.params.atividadeId, function(err, foundAtividade){
+        if(err || !foundAtividade){
+            console.log(err);
+            req.flash('error', 'Desculpe, essa atividade não existe!');
+            res.redirect('/agencias');        
+        } else {
+            res.render("atividades/view", { agencia_id: req.params.id, atividade: foundAtividade });            
+        }
+     });
+    
+});
+
 router.put("/:atividadeId", isAdmin, function (req, res) {
     Atividade.findByIdAndUpdate(req.params.atividadeId, req.body.atividade, function (err, atividade) {
         if (err) {
