@@ -52,6 +52,21 @@ router.get("/:atividadeId/edit", isLoggedIn, checkUserAtividade, function (req, 
     res.render("atividades/edit", { agencia_id: req.params.id, atividade: req.atividade });
 });
 
+router.post("/:atividadeId/confirm", isLoggedIn, checkUserAtividade, function (req, res) {
+    Atividade.findById(req.params.atividadeId, function(err, foundAtividade){
+        if(err || !foundAtividade){
+            console.log(err);
+            req.flash('error', 'Desculpe, essa atividade não existe!');
+            res.redirect('/agencias');        
+        } else {
+            foundAtividade.status = 'F';
+            foundAtividade.save();
+            res.redirect('/agencias/' + req.params.id + '/relatorios');
+        }
+     });
+    //res.render("atividades/edit", { agencia_id: req.params.id, atividade: req.atividade });
+});
+
 router.get("/:atividadeId/view", function (req, res) {
     Atividade.findById(req.params.atividadeId, function(err, foundAtividade){
         if(err || !foundAtividade){
@@ -71,7 +86,7 @@ router.put("/:atividadeId", isAdmin, function (req, res) {
             console.log(err);
             res.render("edit");
         } else {
-            res.redirect("/agencias/" + req.params.id);
+            res.redirect("/agencias/" + req.params.id + "/relatorios");
         }
     });
 });

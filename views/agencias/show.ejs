@@ -26,11 +26,6 @@
               <%= agencia.author.username %></em>
           </p>
           <% if(currentUser && agencia.author.id.equals(currentUser._id)){ %>
-            
-            <% console.log(currentUser._id) %>            
-              <% console.log(agencia.author.id) %>            
-                <% console.log(currentUser.isAdmin) %>                              
-
             <a class="btn btn-warning" href="/agencias/<%= agencia._id %>/edit">Edit</a>
             <form action="/agencias/<%= agencia._id %>?_method=DELETE" method="POST" class="delete-form">
               <button class="btn btn-danger">Delete</button>

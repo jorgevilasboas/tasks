@@ -44,7 +44,7 @@
                                         
                                         <% if (diffDays < 0 && atividade.status != 'F' ) { %>
                                             <span class="label label-danger ">&nbsp;</span>
-                                        <% } else if (diffDays >= 0 && diffDays <=5 ) {%>
+                                        <% } else if (diffDays >= 0 && diffDays <=5 && atividade.status != 'F') {%>
                                             <span class="label label-warning">&nbsp;</span>
                                         <% } else { %>
                                             <span class="label label-success">&nbsp;</span>
@@ -94,6 +94,10 @@
                                                 method="POST">
                                                 <input type='hidden' name='action' value='relatorios'>
                                                 <button class="btn btn-xs glyphicon btn-danger glyphicon-trash"></button>
+                                            </form>
+                                            <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/confirm"
+                                                method="POST">                                                
+                                                <button class="btn btn-xs btn-success glyphicon glyphicon-ok"></button>
                                             </form>
                                             <% } else {%>                                            
                                                 Usuario sem permissão                                            

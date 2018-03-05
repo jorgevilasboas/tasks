@@ -221,6 +221,9 @@ router.post("/:id/relatorios", function (req, res) {
     var end = req.body.end;
     var filterStart = new Date(start.substr(0, 4), start.substr(5, 2) - 1, start.substr(8, 2), 0, 0, 0, 0);
     var filterEnd = new Date(end.substr(0, 4), end.substr(5, 2) - 1, end.substr(8, 2), 23, 59, 59, 999);
+    console.log('filterStart', filterStart);
+    console.log('filterEnd', filterEnd);
+
     //start.setHours(0,0,0,0);
 
     //end.setHours(23,59,59,999);
