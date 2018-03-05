@@ -214,11 +214,11 @@ router.get("/:id/relatorios", function (req, res) {
     });
 });
 
-router.post("/:id/relatorios", function (req, res) {
-    var filter = 'atividades';
+router.post("/:id/relatorios", function (req, res) {    
     var name = req.body.name;
     var start = req.body.start;
     var end = req.body.end;
+    var car = req.body.car;
     var filterStart = new Date(start.substr(0, 4), start.substr(5, 2) - 1, start.substr(8, 2), 0, 0, 0, 0);
     var filterEnd = new Date(end.substr(0, 4), end.substr(5, 2) - 1, end.substr(8, 2), 23, 59, 59, 999);
     console.log('filterStart', filterStart);
@@ -229,7 +229,9 @@ router.post("/:id/relatorios", function (req, res) {
     //end.setHours(23,59,59,999);
     filter = {
         path: 'atividades',
-        match: { fields: { $in: [new RegExp(name, "i")] } },
+        match: { fields: { $in: [new RegExp(name, "i")] },
+                car : { $in: new RegExp(car, "i") }                
+               },
         options: { sort: { start: "ascending" } }
     }
 
@@ -245,7 +247,7 @@ router.post("/:id/relatorios", function (req, res) {
         }
 
         //render show template with that agencia
-        res.render("agencias/relatorios", { agencia: foundAgencia, name: name, start: start, end: end });
+        res.render("agencias/relatorios", { agencia: foundAgencia, name: name, start: start, end: end, car: car });
     });
 });
 
