@@ -1,6 +1,10 @@
 <% include ../partials/header %>
     <form action="/agencias/<%=agencia._id%>/relatorios" method="POST">
         <div class="form-group">
+            <label for="name">Nome da Atividade</label>
+            <input class="form-control" type="text" value="<%= typeof title !== 'undefined' ? title : '' %>" name="title" id="title" placeholder="Nome da Atividade">
+        </div>
+        <div class="form-group">
             <label for="name">Membro da Equipe</label>
             <input class="form-control" type="text" value="<%= typeof equipe !== 'undefined' ? equipe : '' %>" name="equipe" id="equipe" placeholder="Nome do membro da equipe">
         </div>
