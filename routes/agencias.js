@@ -215,7 +215,7 @@ router.get("/:id/relatorios", function (req, res) {
 });
 
 router.post("/:id/relatorios", function (req, res) {    
-    var name = req.body.name;
+    var equipe = req.body.equipe;
     var start = req.body.start;
     var end = req.body.end;
     var car = req.body.car;
@@ -229,7 +229,7 @@ router.post("/:id/relatorios", function (req, res) {
     //end.setHours(23,59,59,999);
     filter = {
         path: 'atividades',
-        match: { fields: { $in: [new RegExp(name, "i")] },
+        match: { fields: { $in: [new RegExp(equipe, "i")] },
                 car : { $in: new RegExp(car, "i") }                
                },
         options: { sort: { start: "ascending" } }
@@ -247,7 +247,7 @@ router.post("/:id/relatorios", function (req, res) {
         }
 
         //render show template with that agencia
-        res.render("agencias/relatorios", { agencia: foundAgencia, name: name, start: start, end: end, car: car });
+        res.render("agencias/relatorios", { agencia: foundAgencia, equipe: equipe, start: start, end: end, car: car });
     });
 });
 
