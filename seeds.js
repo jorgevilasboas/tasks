@@ -23,7 +23,7 @@ function seedDB(){
                 if(err){
                     console.log(err)
                 } else {
-                    console.log("added a agencia");
+                    //console.log("added a agencia");
                     //create a atividade
                     Atividade.create(
                         {
