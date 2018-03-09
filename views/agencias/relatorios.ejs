@@ -64,13 +64,14 @@
                                         
                                         <% if (diffDays < 0 && atividade.status != 'F' ) { %>
                                             <!-- <span class="label label-danger ">Atrasada</span> -->
-                                            <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f620.png?v6" alt="angry" width="30">
+                                            <img data-toggle="tooltip" data-placement="top" title="Prazo expirado" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f620.png?v6" alt="angry" width="30">                                            
                                         <% } else if (diffDays >= 0 && diffDays <=5 && atividade.status != 'F') {%>
                                             <!-- <span class="label label-warning">Atenção</span> -->
-                                            <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f635.png?v6" alt="dizzy_face" width="30">
+                                            <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f635.png?v6" alt="dizzy_face" width="30" data-toggle="tooltip" data-placement="top" title="Prazo próximo">
+                                            
                                         <% } else { %>
-                                            <!-- <span class="label label-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
-                                            <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f438.png?v6" alt="frog" width="30">
+                                            <!-- <span class="label label-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->                                            
+                                            <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f438.png?v6" alt="frog" width="30" data-toggle="tooltip" data-placement="top" title="De boa na lagoa...">
                                         <% } %>
                                         <%= atividade.title %>
                                     </td>
