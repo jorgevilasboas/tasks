@@ -198,7 +198,7 @@ router.get("/:id/relatorios", function (req, res) {
     filter = {
         path: 'atividades',
         match: { fields: { $in: [new RegExp(name, "i")] } },
-        options: { sort: { start: "ascending" } }
+        options: { sort: { end: "ascending" } }
     }
     var atividades = [];
     //find the agencia with provided ID
@@ -234,7 +234,7 @@ router.post("/:id/relatorios", function (req, res) {
                 car : { $in: new RegExp(car, "i") },
                 title : { $in: new RegExp(title, "i") }
                },
-        options: { sort: { start: "ascending" } }
+        options: { sort: { end: "ascending" } }
     }
 
     if (start != '' && end != '' ) {
