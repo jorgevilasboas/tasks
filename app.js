@@ -23,6 +23,7 @@ var PORT = process.env.PORT || 3000;
 
 //requiring routes
 var atividadeRoutes    = require("./routes/atividades"),
+    apiRoutes = require("./routes/api"),
     agenciaRoutes = require("./routes/agencias"),
     indexRoutes      = require("./routes/index"),
     relatoriosRoutes = require("./routes/")
@@ -72,6 +73,7 @@ app.use(function(req, res, next){
 
 
 app.use("/", indexRoutes);
+app.use("/api", apiRoutes);
 app.use("/agencias", agenciaRoutes);
 app.use("/agencias/:id/atividades", atividadeRoutes);
 app.use(errorhandler())
