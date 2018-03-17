@@ -46,7 +46,7 @@ router.get("/agencias", function (req, res) {
 
 
 //CREATE - add new agencia to DB
-router.post("/", isLoggedIn, isSafe, function (req, res) {
+router.post("/agencias", isLoggedIn, isSafe, function (req, res) {
     // get data from form and add to agencias array
     var name = req.body.name;
     var image = req.body.image;
@@ -85,7 +85,7 @@ router.get("/new", isLoggedIn, function (req, res) {
 });
 
 // SHOW - shows more info about one agencia
-router.get("/:id", function (req, res) {
+router.get("/agencias/:id", function (req, res) {
     var atividades = [];
     //find the agencia with provided ID
     Agencia.findById(req.params.id).populate("atividades").exec(function (err, foundAgencia) {
@@ -96,7 +96,7 @@ router.get("/:id", function (req, res) {
         }
         console.log(foundAgencia)
         //render show template with that agencia
-        res.render("agencias/show", { agencia: foundAgencia, atividades: atividades });
+        res.send(foundAgencia);
     });
 });
 
