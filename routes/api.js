@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Agencia = require("../models/agencia");
 var Atividade = require("../models/atividade");
+var User = require("../models/user");
 var middleware = require("../middleware");
 var geocoder = require('geocoder');
 var googleMapsClient = require('@google/maps').createClient({
@@ -44,9 +45,31 @@ router.get("/agencias", function (req, res) {
 
 });
 
+router.get("/login", async (req, res) => {
+    const {username, password} = req.body;
+    const usuario = await User.findOne({username});        
+    if (usuario === null){
+        res.send('nok');
+    } else {
+        res.json(usuario);
+    }    
+        
+});
+
+router.get("/users", function (req, res) {
+    // Get all agencias from DB
+    User.find({}, function (err, allUsers) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(allUsers);
+        }
+    });
+});
+
 
 //CREATE - add new agencia to DB
-router.post("/agencias", isLoggedIn, isSafe, function (req, res) {
+router.post("/agencias", function (req, res) {
     // get data from form and add to agencias array
     var name = req.body.name;
     var image = req.body.image;
