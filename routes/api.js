@@ -52,8 +52,7 @@ router.post("/login", async (req, res) => {
         res.send({message: 'Usuario não encontrado'});
     } else {
         res.json(usuario);
-    }
-        
+    }        
 });
 
 router.get("/users", function (req, res) {

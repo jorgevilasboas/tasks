@@ -75,7 +75,6 @@ app.use(function(req, res, next){
    next();
 });
 
-
 app.use("/", indexRoutes);
 app.use("/api", apiRoutes);
 app.use("/agencias", agenciaRoutes);
