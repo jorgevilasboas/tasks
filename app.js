@@ -21,12 +21,7 @@ require('dotenv').load();
 
 var PORT = process.env.PORT || 3000;
 
-//requiring routes
-var atividadeRoutes    = require("./routes/atividades"),
-    apiRoutes = require("./routes/api"),
-    agenciaRoutes = require("./routes/agencias"),
-    indexRoutes      = require("./routes/index"),
-    relatoriosRoutes = require("./routes/")
+//rotas
 
     
 // assign mongoose promise library and connect to database
@@ -42,6 +37,15 @@ mongoose.connect(databaseUri, { useMongoClient: true })
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+//requiring routes
+var atividadeRoutes    = require("./routes/atividades"),
+    apiRoutes = require("./routes/api"),
+    agenciaRoutes = require("./routes/agencias"),
+    indexRoutes      = require("./routes/index"),
+    relatoriosRoutes = require("./routes/")
+
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride('_method'));

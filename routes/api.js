@@ -8,7 +8,8 @@ var geocoder = require('geocoder');
 var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyDinjRMvDF5NiwP_krdMj1VYDHw_3b7whE'
 });
-var { isLoggedIn, checkUserAgencia, checkUserAtividade, isAdmin, isSafe } = middleware; // destructuring assignment
+var { isLoggedIn, checkUserAgencia, checkUserAtividade, isAdmin, isSafe } = middleware; 
+// destructuring assignment
 
 // Define escapeRegex function for search feature
 function escapeRegex(text) {
@@ -42,17 +43,16 @@ router.get("/agencias", function (req, res) {
             res.json(allAgencias);
         }
     });
-
 });
 
-router.get("/login", async (req, res) => {
-    const {username, password} = req.body;
-    const usuario = await User.findOne({username});        
+router.post("/login", async (req, res) => {
+    const {username} = req.body.username;    
+    const usuario = await User.findOne({username});
     if (usuario === null){
-        res.send('nok');
+        res.send({message: 'Usuario não encontrado'});
     } else {
         res.json(usuario);
-    }    
+    }
         
 });
 
