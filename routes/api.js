@@ -8,6 +8,9 @@ var geocoder = require('geocoder');
 var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyDinjRMvDF5NiwP_krdMj1VYDHw_3b7whE'
 });
+
+var auth = require('passport-local-authenticate');
+
 var { isLoggedIn, checkUserAgencia, checkUserAtividade, isAdmin, isSafe } = middleware; 
 // destructuring assignment
 
@@ -46,12 +49,31 @@ router.get("/agencias", function (req, res) {
 });
 
 router.post("/login", async (req, res) => {
-    const {username} = req.body.username;    
-    const usuario = await User.findOne({username});
+    const {username, password} = req.body;
+    console.log(password);       
+    const usuario = await User.findOne({username}).select('+salt hash');
     if (usuario === null){
         res.send({message: 'Usuario não encontrado'});
-    } else {
-        res.json(usuario);
+    } else {        
+        
+        // hashed = {};
+        // hashed.salt = usuario.salt;
+        // hashed.hash = usuario.hash;        
+        // auth.verify(password, hashed, function (err, verified){
+        //     console.log(password);
+        //     console.log(hashed);
+        //     res.send({verified});
+        // });
+        
+
+        // auth.hash('1234', function(err, hashed) {
+        //     console.log(hashed.hash); // Hashed password
+        //     console.log(hashed.salt); // Salt
+        //     res.json(usuario);
+            
+        //  });
+          
+        
     }        
 });
 
