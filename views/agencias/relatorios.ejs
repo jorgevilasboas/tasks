@@ -59,7 +59,7 @@
                                     <td>
                                         <% let now = Date.now() %>
                                           
-                                        <% let timeDiff = atividade.end.getTime() - now; %>
+                                        <% let timeDiff = (atividade.end == null?0:atividade.end.getTime() - now) ; %>
                                         <% let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); %>                                                                             
                                         
                                         <% if (diffDays < 0 && atividade.status != 'F' ) { %>
