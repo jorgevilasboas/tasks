@@ -56,22 +56,22 @@ router.post("/login", async (req, res) => {
         res.send({message: 'Usuario não encontrado'});
     } else {        
         
-        // hashed = {};
-        // hashed.salt = usuario.salt;
-        // hashed.hash = usuario.hash;        
-        // auth.verify(password, hashed, function (err, verified){
-        //     console.log(password);
-        //     console.log(hashed);
-        //     res.send({verified});
-        // });
+        hashed = {};
+        hashed.salt = usuario.salt;
+        hashed.hash = usuario.hash;        
+        auth.verify(password, hashed, function (err, verified){
+            console.log(password);
+            console.log(hashed);
+            res.send({verified});
+        });
         
 
-        // auth.hash('1234', function(err, hashed) {
-        //     console.log(hashed.hash); // Hashed password
-        //     console.log(hashed.salt); // Salt
-        //     res.json(usuario);
+        auth.hash('1234', function(err, hashed) {
+            console.log(hashed.hash); // Hashed password
+            console.log(hashed.salt); // Salt
+            res.json(usuario);
             
-        //  });
+         });
           
         
     }        
