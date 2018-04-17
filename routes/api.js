@@ -1,3 +1,4 @@
+var passport = require("passport");
 var express = require("express");
 var router = express.Router();
 var Agencia = require("../models/agencia");
@@ -48,34 +49,16 @@ router.get("/agencias", function (req, res) {
     });
 });
 
-// router.post("/login", async (req, res) => {
-//     const {username, password} = req.body;
-//     console.log(password);       
-//     const usuario = await User.findOne({username}).select('+salt hash');
-//     if (usuario === null){
-//         res.send({message: 'Usuario não encontrado'});
-//     } else {        
-        
-//         hashed = {};
-//         hashed.salt = usuario.salt;
-//         hashed.hash = usuario.hash;        
-//         auth.verify(password, hashed, function (err, verified){
-//             console.log(password);
-//             console.log(hashed);
-//             res.send({verified});
-//         });
-        
-
-//         auth.hash('1234', function(err, hashed) {
-//             console.log(hashed.hash); // Hashed password
-//             console.log(hashed.salt); // Salt
-//             res.json(usuario);
-            
-//          });
-          
-        
-//     }        
-// });
+router.post("/login", passport.authenticate('local'), async (req, res) => {
+    const {username, password} = req.body;
+    console.log(password);       
+    const usuario = await User.findOne({username});
+    if (usuario === null){
+        res.send({message: 'Usuario não encontrado'});
+    } else {
+       res.json(usuario);
+    }        
+});
 
 router.get("/users", function (req, res) {
     // Get all agencias from DB
