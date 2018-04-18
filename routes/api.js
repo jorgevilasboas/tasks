@@ -22,16 +22,16 @@ function escapeRegex(text) {
 };
 
 //AUTH
-router.post("/login", passport.authenticate('local'), async function (req, res) {
-    const {username, password} = req.body;
-    console.log(password);       
-    const usuario = await User.findOne({username});
-    if (usuario === null){
-        res.send({message: 'Usuario não encontrado'});
-    } else {
-       res.json(usuario);
-    }        
-});
+// router.post("/login", passport.authenticate('local'), async function (req, res) {
+//     const {username, password} = req.body;
+//     console.log(password);       
+//     const usuario = await User.findOne({username});
+//     if (usuario === null){
+//         res.send({message: 'Usuario não encontrado'});
+//     } else {
+//        res.json(usuario);
+//     }        
+// });
 
 //INDEX - show all agencias
 router.get("/agencias", function (req, res) {
