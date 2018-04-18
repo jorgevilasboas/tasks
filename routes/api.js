@@ -21,6 +21,39 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
+router.get('/md5', function(req, res){
+    var md5 = require('md5');
+    User.findById("5a5cff88b0c8bd34a4910b2b", function(err, foundUser){
+        if(err || !foundUser){
+            res.send('Desculpe, essa usuario não foi encontrado!')            
+        } else {
+            foundUser.md5 = md5('1234');
+            foundUser.save();
+            res.send('senha 1234 salva em md5' + md5('1234') );
+        }
+     });
+
+
+    
+});
+
+router.post('/login', function(req, res){
+    var md5 = require('md5');
+    const {username, password} = req.body;
+    const md5pass = md5(password);
+
+
+    User.findOne({username, md5pass}, function(err, foundUser){
+        if(err || !foundUser){
+            res.send('Desculpe, essa usuario não foi encontrado!')            
+        } else {                        
+            res.send(foundUser);
+        }
+     });
+
+
+    
+});
 //AUTH
 // router.post("/login", passport.authenticate('local'), async function (req, res) {
 //     const {username, password} = req.body;
