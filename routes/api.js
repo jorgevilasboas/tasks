@@ -5,7 +5,8 @@ var Agencia = require("../models/agencia");
 var Atividade = require("../models/atividade");
 var User = require("../models/user");
 var middleware = require("../middleware");
-var geocoder = require('geocoder');
+var Promise = require("bluebird");
+var geocoder = Promise.promisifyAll(require('geocoder'));
 var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyDinjRMvDF5NiwP_krdMj1VYDHw_3b7whE'
 });
@@ -20,21 +21,16 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
-router.get("/", function (req, res) {
-    res.send({
-        "_id": "5a78c6657239c474ad2a82b3",
-        "username": "username@domain.com",
-        "email": "username@domain.com",
-        "_kmd": {
-            "lmt": "2018-02-05T21:02:29.459Z",
-            "ect": "2018-02-05T21:02:29.459Z",
-            "authtoken": "c083e5c3-9bec-4be4-aecf-347a2e137e91.AVJlx3jWo94+NJhWSuZMwha6RzwuxPvrjVGpcozq3oA="
-        },
-        "_acl": {
-            "creator": "5a78c6657239c474ad2a82b3"
-        }
-    });
-
+//AUTH
+router.post("/login", passport.authenticate('local'), async (req, res) => {
+    const {username, password} = req.body;
+    console.log(password);       
+    const usuario = await User.findOne({username});
+    if (usuario === null){
+        res.send({message: 'Usuario não encontrado'});
+    } else {
+       res.json(usuario);
+    }        
 });
 
 //INDEX - show all agencias
@@ -47,17 +43,6 @@ router.get("/agencias", function (req, res) {
             res.json(allAgencias);
         }
     });
-});
-
-router.post("/login", passport.authenticate('local'), async (req, res) => {
-    const {username, password} = req.body;
-    console.log(password);       
-    const usuario = await User.findOne({username});
-    if (usuario === null){
-        res.send({message: 'Usuario não encontrado'});
-    } else {
-       res.json(usuario);
-    }        
 });
 
 router.get("/users", function (req, res) {
@@ -79,31 +64,37 @@ router.post("/agencias", function (req, res) {
     var image = req.body.image;
     var desc = req.body.description;
     var author = {
-        id: req.user._id,
-        username: req.user.username
+        id: req.body._id,
+        username: req.body.username
     }
 
-    geocoder.geocode(req.body.location, function (err, data) {
-        if (err || data.status === 'ZERO_RESULTS') {
-            req.flash('error', 'Endereço Inválido');
-            return res.redirect('back');
+    var lat, lng = 0;
+    var location = "";
+
+    geocoder.geocodeAsync(req.body.location)
+    .then(function(data){
+        if (data && data.results[0] && data.results[0].geometry){
+            lat = data.results[0].geometry.location.lat;
+            lng = data.results[0].geometry.location.lng;
+            location = data.results[0].formatted_address;      
+        } else {
+            lat = 0;
+            lng = 0;
         }
-        console.log(data.results[0]);
-        var lat = data.results[0].geometry.location.lat;
-        var lng = data.results[0].geometry.location.lng;
-        var location = data.results[0].formatted_address;
-        var newAgencia = { name: name, image: image, description: desc, author: author, location: location, lat: lat, lng: lng };
-        // Create a new agencia and save to DB
-        Agencia.create(newAgencia, function (err, newlyCreated) {
-            if (err) {
-                console.log(err);
-            } else {
-                //redirect back to agencias page
-                console.log(newlyCreated);
-                res.redirect("/agencias");
-            }
-        });
     });
+
+    var newAgencia = { name: name, image: image, description: desc, author: author, location: location, lat: lat, lng: lng };
+
+    // Create a new agencia and save to DB
+    Agencia.create(newAgencia, function (err, newlyCreated) {
+        if (err) {
+            res.status(401).send({"err": err });
+        } else {
+            //redirect back to agencias page
+            res.send(newlyCreated);            
+        }
+    });
+
 });
 
 //NEW - show form to create new agencia
