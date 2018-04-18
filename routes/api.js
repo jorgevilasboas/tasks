@@ -22,7 +22,7 @@ function escapeRegex(text) {
 };
 
 //AUTH
-router.post("/login", passport.authenticate('local'), async (req, res) => {
+router.post("/login", passport.authenticate('local'), async function (req, res) {
     const {username, password} = req.body;
     console.log(password);       
     const usuario = await User.findOne({username});
