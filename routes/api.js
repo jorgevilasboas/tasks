@@ -97,11 +97,6 @@ router.post("/agencias", function (req, res) {
 
 });
 
-//NEW - show form to create new agencia
-router.get("/new", isLoggedIn, function (req, res) {
-    res.render("agencias/new");
-});
-
 // SHOW - shows more info about one agencia
 router.get("/agencias/:id", function (req, res) {
     var atividades = [];
@@ -174,7 +169,7 @@ router.put("/:id", isSafe, function (req, res) {
 });
 
 // DELETE - removes agencia and its atividades from the database
-router.delete("/:id", isLoggedIn, checkUserAgencia, function (req, res) {
+router.delete("agencias/:id",  function (req, res) {
     Atividade.remove({
         _id: {
             $in: req.agencia.atividades
