@@ -45,90 +45,98 @@
                 <th>Km</th>
                 <th>Recurso</th>
                 <th>Qtde</th>
+                <th>Transporte</th>
                 <th>Status</th>
                 <th>Operação</th>
             </tr>
         </thead>
         <tbody>            
             <% let kmTotal = 0 %>
-                <% let qtdeTotal = 0 %>
-                    <% agencia.atividades.forEach(function(atividade){ %>
-                        <% kmTotal += atividade.km %>
-                            <% qtdeTotal += atividade.resource_value %>
-                                <tr>
-                                    <td>
-                                        <% let now = Date.now() %>
-                                          
-                                        <% let timeDiff = (atividade.end == null?0:atividade.end.getTime() - now) ; %>
-                                        <% let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); %>                                                                             
-                                        
-                                        <% if (diffDays < 0 && atividade.status != 'F' ) { %>
-                                            <!-- <span class="label label-danger ">Atrasada</span> -->
-                                            <img data-toggle="tooltip" data-placement="top" title="Prazo expirado" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f620.png?v6" alt="angry" width="30">                                            
-                                        <% } else if (diffDays >= 0 && diffDays <=5 && atividade.status != 'F') {%>
-                                            <!-- <span class="label label-warning">Atenção</span> -->
-                                            <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f635.png?v6" alt="dizzy_face" width="30" data-toggle="tooltip" data-placement="top" title="Prazo próximo">
-                                            
-                                        <% } else { %>
-                                            <!-- <span class="label label-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->                                            
-                                            <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f438.png?v6" alt="frog" width="30" data-toggle="tooltip" data-placement="top" title="De boa na lagoa...">
-                                        <% } %>
-                                        <%= atividade.title %>
-                                    </td>
-                                    <td>
-                                        <%=moment(atividade.start).utc(-3).format('DD/MM/YYYY HH:mm') %>
-                                    </td>
-                                    <td>
-                                        <%=moment(atividade.end).utc(-3).format('DD/MM/YYYY HH:mm') %>
-                                    </td>
-                                    <td>
-                                        <%= atividade.fields %>
-                                    </td>
-                                    <td>
-                                        <%= atividade.car %>
-                                    </td>
-                                    <td>
-                                        <%= atividade.km %>
-                                    </td>
-                                    <td>
-                                        <% if(atividade.resource_type == 'D') { %>
-                                            <%= "Diária" %>
-                                                <% } else if (atividade.resource_type == 'I') { %>
-                                                    <%= "Idenização" %>
-                                                        <% } %>
-                                    </td>
-                                    <td>
-                                        <%= atividade.resource_value %>
-                                    </td>
-                                    <td>
-                                        <% if(atividade.status == 'P') { %>
-                                            <%= "Planejada" %>
-                                                <% } else if (atividade.status == 'C') { %>
-                                                    <%= "Cancelada" %>
-                                                    <% } else if (atividade.status == 'E') { %>
-                                                        <%= "Em Andamento" %>
-                                                        <% } else if (atividade.status == 'F') { %>
-                                                            <%= "Finalizada" %>
-                                                                <% } %>
-                                    </td>
-                                    <td>
-                                        <% if(currentUser && atividade.author.id.equals(currentUser._id)){ %>
-                                            <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning glyphicon glyphicon-pencil"></a>
-                                            <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE&action=relatorios"
-                                                method="POST">
-                                                <input type='hidden' name='action' value='relatorios'>
-                                                <button class="btn btn-xs glyphicon btn-danger glyphicon-trash"></button>
-                                            </form>
-                                            <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/confirm"
-                                                method="POST">                                                
-                                                <button class="btn btn-xs btn-success glyphicon glyphicon-ok"></button>
-                                            </form>
-                                            <% } else {%>                                            
-                                                Usuario sem permissão                                            
+            <% let qtdeTotalDiaria = 0 %>
+            <% let qtdeTotalIdenizacao = 0 %>
+            <% let qtdeTotalTransport = 0 %>
+            <% agencia.atividades.forEach(function(atividade){ %>
+                <% kmTotal += atividade.km %>                
+                <% qtdeTotalTransport += atividade.transport %> 
+                <tr>
+                    <td>
+                        <% let now = Date.now() %>
+                            
+                        <% let timeDiff = (atividade.end == null?0:atividade.end.getTime() - now) ; %>
+                        <% let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); %>                                                                             
+                        
+                        <% if (diffDays < 0 && atividade.status != 'F' ) { %>
+                            <!-- <span class="label label-danger ">Atrasada</span> -->
+                            <img data-toggle="tooltip" data-placement="top" title="Prazo expirado" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f620.png?v6" alt="angry" width="30">                                            
+                        <% } else if (diffDays >= 0 && diffDays <=5 && atividade.status != 'F') {%>
+                            <!-- <span class="label label-warning">Atenção</span> -->
+                            <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f635.png?v6" alt="dizzy_face" width="30" data-toggle="tooltip" data-placement="top" title="Prazo próximo">
+                            
+                        <% } else { %>
+                            <!-- <span class="label label-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->                                            
+                            <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f438.png?v6" alt="frog" width="30" data-toggle="tooltip" data-placement="top" title="De boa na lagoa...">
+                        <% } %>
+                        <%= atividade.title %>
+                    </td>
+                    <td>
+                        <%=moment(atividade.start).utc(-3).format('DD/MM/YYYY HH:mm') %>
+                    </td>
+                    <td>
+                        <%=moment(atividade.end).utc(-3).format('DD/MM/YYYY HH:mm') %>
+                    </td>
+                    <td>
+                        <%= atividade.fields %>
+                    </td>
+                    <td>
+                        <%= atividade.car %>
+                    </td>
+                    <td>
+                        <%= atividade.km %>
+                    </td>
+                    <td>
+                        <% if(atividade.resource_type == 'D') { %>
+                            <% qtdeTotalDiaria += atividade.resource_value %>
+                            <%= "Diária" %>
+                        <% } else if (atividade.resource_type == 'I') { %>
+                                <%= "Idenização" %>
+                                <% qtdeTotalIdenizacao += atividade.resource_value %>
+                        <% } %>
+                    </td>
+                    <td>
+                        <%= atividade.resource_value %>
+                    </td>
+                    <td>
+                        <%= atividade.transport %>
+                    </td>
+                    <td>
+                        <% if(atividade.status == 'P') { %>
+                            <%= "Planejada" %>
+                                <% } else if (atividade.status == 'C') { %>
+                                    <%= "Cancelada" %>
+                                    <% } else if (atividade.status == 'E') { %>
+                                        <%= "Em Andamento" %>
+                                        <% } else if (atividade.status == 'F') { %>
+                                            <%= "Finalizada" %>
                                                 <% } %>
-                                    </td>
-                                </tr>
-                                <% }) %>
+                    </td>
+                    <td>
+                        <% if(currentUser && atividade.author.id.equals(currentUser._id)){ %>
+                            <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning glyphicon glyphicon-pencil"></a>
+                            <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE&action=relatorios"
+                                method="POST">
+                                <input type='hidden' name='action' value='relatorios'>
+                                <button class="btn btn-xs glyphicon btn-danger glyphicon-trash"></button>
+                            </form>
+                            <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/confirm"
+                                method="POST">                                                
+                                <button class="btn btn-xs btn-success glyphicon glyphicon-ok"></button>
+                            </form>
+                            <% } else {%>                                            
+                                Usuario sem permissão                                            
+                                <% } %>
+                    </td>
+                </tr>
+            <% }) %>
         </tbody>
     </table>
 
@@ -139,8 +147,15 @@
             Km: <%= kmTotal %>
         </p>
         <p class="text-warning" align="center">
-            Qtde: <%= qtdeTotal %>
+            Total Diaria: <%= qtdeTotalDiaria %>
         </p>
+        <p class="text-warning" align="center">
+            Total Idenizacao: <%= qtdeTotalIdenizacao %>
+        </p>
+        <p class="text-warning" align="center">
+            Total Transporte: <%= qtdeTotalTransport %>
+        </p>
+        
         <br>
         <p align="center"><a href="/agencias/<%= agencia._id %>">Voltar</a></p>
         <br><br>
