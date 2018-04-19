@@ -23,13 +23,13 @@ function escapeRegex(text) {
 
 router.get('/md5', function(req, res){
     var md5 = require('md5');
-    User.findById("5a5cff88b0c8bd34a4910b2b", function(err, foundUser){
+    User.findById("5a95a144ae89600014d654ac", function(err, foundUser){
         if(err || !foundUser){
             res.send('Desculpe, essa usuario não foi encontrado!')            
         } else {
-            foundUser.md5 = md5('1234');
+            foundUser.md5 = md5('lagarto');
             foundUser.save();
-            res.send('senha 1234 salva em md5' + md5('1234') );
+            res.send('senha lagarto salva em md5: ' + md5('lagarto') );
         }
      });
 
