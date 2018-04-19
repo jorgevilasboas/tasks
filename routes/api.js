@@ -45,7 +45,7 @@ router.post('/login', function(req, res){
 
     User.findOne({username, md5pass}, function(err, foundUser){
         if(err || !foundUser){
-            res.send('Desculpe, essa usuario não foi encontrado!')            
+            res.send({success:false, errorMessage:'Desculpe, esse usuario não foi encontrado!'})            
         } else { 
             foundUser.token = foundUser.md5pass;
             foundUser.md5pass = undefined;
