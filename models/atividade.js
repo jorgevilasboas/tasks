@@ -7,6 +7,7 @@ var atividadeSchema = mongoose.Schema({
     url: String,
     car: String,
     km: Number,
+    transport: Number,
     color: String,
     status: String,
     fields: [],
