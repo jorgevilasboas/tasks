@@ -27,7 +27,7 @@ router.get('/md5', function(req, res){
         if(err || !foundUser){
             res.send('Desculpe, essa usuario não foi encontrado!')            
         } else {
-            foundUser.md5 = md5('lagarto');
+            foundUser.md5pass = md5('lagarto');
             foundUser.save();
             res.send('senha lagarto salva em md5: ' + md5('lagarto') );
         }
