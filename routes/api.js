@@ -13,7 +13,7 @@ var googleMapsClient = require('@google/maps').createClient({
 
 var auth = require('passport-local-authenticate');
 
-var { isLoggedIn, checkUserAgencia, checkUserAtividade, isAdmin, isSafe } = middleware; 
+var { isLoggedIn, checkUserAgencia, checkUserAtividade, isAdmin, isSafe, checkToken } = middleware; 
 // destructuring assignment
 
 // Define escapeRegex function for search feature
@@ -37,6 +37,7 @@ router.get('/md5', function(req, res){
     
 });
 
+// LOGIN
 router.post('/login', function(req, res){
     var md5 = require('md5');
     const {username, password} = req.body;
@@ -45,7 +46,7 @@ router.post('/login', function(req, res){
 
     User.findOne({username, md5pass}, function(err, foundUser){
         if(err || !foundUser){
-            res.send({success:false, errorMessage:'Desculpe, esse usuario não foi encontrado!'})            
+            res.send({success:false, errorMessage:'Desculpe, esse usuario não foi encontrado!'})
         } else { 
             foundUser.token = foundUser.md5pass;
             foundUser.md5pass = undefined;
@@ -55,29 +56,6 @@ router.post('/login', function(req, res){
 
 
     
-});
-//AUTH
-// router.post("/login", passport.authenticate('local'), async function (req, res) {
-//     const {username, password} = req.body;
-//     console.log(password);       
-//     const usuario = await User.findOne({username});
-//     if (usuario === null){
-//         res.send({message: 'Usuario não encontrado'});
-//     } else {
-//        res.json(usuario);
-//     }        
-// });
-
-//INDEX - show all agencias
-router.get("/agencias", function (req, res) {
-    // Get all agencias from DB
-    Agencia.find({}, function (err, allAgencias) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(allAgencias);
-        }
-    });
 });
 
 router.get("/users", function (req, res) {
@@ -91,6 +69,18 @@ router.get("/users", function (req, res) {
     });
 });
 
+// AGENCIAS
+//INDEX - show all agencias
+router.get("/agencias", function (req, res) {
+    // Get all agencias from DB
+    Agencia.find({}, function (err, allAgencias) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(allAgencias);
+        }
+    });
+});
 
 //CREATE - add new agencia to DB
 router.post("/agencias", function (req, res) {
@@ -226,7 +216,7 @@ router.delete("agencias/:id",  function (req, res) {
     })
 });
 
-// Relatorios
+// Relatorios ------------------------------------
 router.get("/:id/relatorios", function (req, res) {
     var filter = 'atividades';
     var name = req.body.name;
@@ -286,6 +276,67 @@ router.post("/:id/relatorios", function (req, res) {
 
         //render show template with that agencia
         res.render("agencias/relatorios", { agencia: foundAgencia, equipe: equipe, start: start, end: end, car: car, title: title });
+    });
+});
+
+// ATIVIDADES
+
+router.post("/:id/atividades", checkToken, function (req, res) {
+    //lookup agencia using ID   
+    Agencia.findById(req.params.id, function (err, agencia) {
+        if (err) {
+            console.log(err);
+            res.send({success:false, errorMessage:'Agencia não foi encontrada!'})
+        } else {
+            Atividade.create(req.body.atividade, function (err, atividade) {
+                //console.log(req.body.atividade);
+                if (err) {
+                    console.log(err);
+                    res.send({success:false, errorMessage:'Erro ao criar atividade'})
+                } else {
+                    //add username and id to atividade
+                    atividade.author.id = req.body._id;
+                    atividade.author.username = req.body.username;
+                    //console.log(req.body.atividade);
+                    //save atividade
+                    atividade.save();
+                    agencia.atividades.push(atividade);
+                    agencia.save();
+                    res.send({atividade});
+                }
+            });
+        }
+    });
+});
+
+router.put("/:id/atividades/:atividadeId", checkToken, function (req, res) {
+    Atividade.findByIdAndUpdate(req.params.atividadeId, req.body.atividade, function (err, atividade) {
+        if (err) {            
+            res.send({success:false, errorMessage:'Erro ao atualizar atividade'});
+        } else {
+            res.send({atividade});
+        }
+    });
+});
+
+router.delete("/:id/atividades/:atividadeId", checkToken, function (req, res) {
+    // find agencia, remove atividade from atividades array, delete atividade in db
+    Agencia.findByIdAndUpdate(req.params.id, {
+        $pull: {
+            atividades: req.atividade.id
+        }
+    }, function (err) {
+        if (err) {
+            console.log(err)
+            res.send({success:false, errorMessage:'Erro ao encontar agencia para deletar atividade'});
+        } else {
+            req.atividade.remove(function (err) {
+                if (err) {
+                    res.send({success:false, errorMessage:'Erro ao deletar atividade'});
+                }
+                res.send({success:true, errorMessage:'Atividade removida com sucesso'});
+            });
+        }
     });
 });
 
