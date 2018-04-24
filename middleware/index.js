@@ -38,6 +38,21 @@ module.exports = {
        }
     });
   },
+  apiCheckUserAtividade: function(req, res, next){
+    Atividade.findById(req.params.atividadeId, function(err, foundAtividade){
+       if(err || !foundAtividade){
+           console.log(err);           
+           res.send({success:false, errorMessage:'Desculpe, essa atividade não existe!'});           
+       } else if(foundAtividade.author.id.equals(req.body.user) ){
+            req.atividade = foundAtividade;
+            next();
+       } else {
+           console.log("FoundAtividade:", foundAtividade.author.id);
+           console.log("User: ", req.body.user);
+           res.send({success:false, errorMessage:'Você não tem permissão para fazer isso!'});
+       }
+    });
+  },
   isAdmin: function(req, res, next) {
     //req.user.isAdmin
     if(true) {

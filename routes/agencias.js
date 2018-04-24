@@ -19,8 +19,7 @@ router.get("/teste", function (req, res) {
     googleMapsClient.geocode({
         address: 'Lagarto, Sergipe'
     }, function (err, response) {
-        if (!err) {
-            console.log(response.json.results);
+        if (!err) {            
             res.send(response.json.results)
         }
         else {
@@ -73,8 +72,7 @@ router.post("/", isLoggedIn, isSafe, function (req, res) {
         if (err || data.status === 'ZERO_RESULTS') {
             req.flash('error', 'Endereço Inválido');
             return res.redirect('back');
-        }
-        console.log(data.results[0]);
+        }        
         var lat = data.results[0].geometry.location.lat;
         var lng = data.results[0].geometry.location.lng;
         var location = data.results[0].formatted_address;
@@ -84,8 +82,7 @@ router.post("/", isLoggedIn, isSafe, function (req, res) {
             if (err) {
                 console.log(err);
             } else {
-                //redirect back to agencias page
-                console.log(newlyCreated);
+                //redirect back to agencias page                
                 res.redirect("/agencias");
             }
         });
@@ -106,8 +103,7 @@ router.get("/:id", function (req, res) {
             console.log(err);
             req.flash('error', 'Desculpe, essa agência não existe.');
             return res.redirect('/agencias');
-        }
-        console.log(foundAgencia)
+        }        
         //render show template with that agencia
         res.render("agencias/show", { agencia: foundAgencia, atividades: atividades });
     });
@@ -122,11 +118,7 @@ router.get("/:id/atividades", function (req, res) {
             return res.redirect('/agencias');
         }
         foundAgencia.atividades.forEach(element => {
-            element.url = "/agencias/" + req.params.id + "/atividades/" + element._id + "/view";
-            /*if (element.km != 0 ){
-                console.log(element.km);
-                element.color = 'red';
-            }*/
+            element.url = "/agencias/" + req.params.id + "/atividades/" + element._id + "/view";            
         });
         //render show template with that agencia
         res.send(foundAgencia.atividades);
@@ -208,7 +200,7 @@ router.get("/:id/relatorios", function (req, res) {
             req.flash('error', 'Desculpe, essa agência não existe.');
             return res.redirect('/agencias');
         }
-        console.log(foundAgencia)
+        
         //render show template with that agencia
         res.render("agencias/relatorios", { agencia: foundAgencia, atividades: atividades });
     });
@@ -222,12 +214,7 @@ router.post("/:id/relatorios", function (req, res) {
     var car = req.body.car;
     var filterStart = new Date(start.substr(0, 4), start.substr(5, 2) - 1, start.substr(8, 2), 0, 0, 0, 0);
     var filterEnd = new Date(end.substr(0, 4), end.substr(5, 2) - 1, end.substr(8, 2), 23, 59, 59, 999);
-    console.log('filterStart', filterStart);
-    console.log('filterEnd', filterEnd);
-
-    //start.setHours(0,0,0,0);
-
-    //end.setHours(23,59,59,999);
+        
     filter = {
         path: 'atividades',
         match: { fields: { $in: [new RegExp(equipe, "i")] },

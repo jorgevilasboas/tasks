@@ -56,8 +56,7 @@
             <% let qtdeTotalIdenizacao = 0 %>
             <% let qtdeTotalTransport = 0 %>
             <% agencia.atividades.forEach(function(atividade){ %>
-                <% kmTotal += atividade.km %>  
-                <% console.log(typeof atividade.transport)%>
+                <% kmTotal += atividade.km %>                  
                 <% if (typeof atividade.transport === "number") { %>
                     <% qtdeTotalTransport += atividade.transport %> 
                 <% } %>                

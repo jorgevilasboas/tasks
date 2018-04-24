@@ -44,8 +44,7 @@ router.post("/login", passport.authenticate("local",
         failureFlash: true,
         successFlash: 'Bem-vindo ao Tasks!'
     }), function(req, res){
-        console.log('login');
-        console.log(req.body);
+        
 });
 
 // logout route

@@ -15,15 +15,13 @@ function seedDB(){
    Agencia.remove({}, function(err){
         if(err){
             console.log(err);
-        }
-        //console.log("removed agencias!");
+        }        
          //add a few agencias
         data.forEach(function(seed){
             Agencia.create(seed, function(err, agencia){
                 if(err){
                     console.log(err)
-                } else {
-                    //console.log("added a agencia");
+                } else {                    
                     //create a atividade
                     Atividade.create(
                         {
@@ -34,8 +32,7 @@ function seedDB(){
                                 console.log(err);
                             } else {
                                 agencia.atividades.push(atividade);
-                                agencia.save();
-                                console.log("Created new atividade");
+                                agencia.save();                                
                             }
                         });
                 }

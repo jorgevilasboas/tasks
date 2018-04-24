@@ -26,15 +26,13 @@ router.post("/", isLoggedIn, function (req, res) {
             console.log(err);
             res.redirect("/agencias");
         } else {
-            Atividade.create(req.body.atividade, function (err, atividade) {
-                //console.log(req.body.atividade);
+            Atividade.create(req.body.atividade, function (err, atividade) {                
                 if (err) {
                     console.log(err);
                 } else {
                     //add username and id to atividade
                     atividade.author.id = req.user._id;
-                    atividade.author.username = req.user.username;
-                    //console.log(req.body.atividade);
+                    atividade.author.username = req.user.username;                    
                     //save atividade
                     atividade.save();
                     agencia.atividades.push(atividade);

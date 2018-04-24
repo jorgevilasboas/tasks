@@ -13,7 +13,7 @@ var googleMapsClient = require('@google/maps').createClient({
 
 var auth = require('passport-local-authenticate');
 
-var { isLoggedIn, checkUserAgencia, checkUserAtividade, isAdmin, isSafe, checkToken } = middleware; 
+var { isLoggedIn, checkUserAgencia, checkUserAtividade, isAdmin, isSafe, checkToken, apiCheckUserAtividade } = middleware; 
 // destructuring assignment
 
 // Define escapeRegex function for search feature
@@ -131,8 +131,7 @@ router.get("/agencias/:id", function (req, res) {
             console.log(err);
             req.flash('error', 'Desculpe, essa agência não existe.');
             return res.redirect('/agencias');
-        }
-        console.log(foundAgencia)
+        }        
         //render show template with that agencia
         res.send(foundAgencia);
     });
@@ -148,10 +147,7 @@ router.get("/:id/atividades", function (req, res) {
         }
         foundAgencia.atividades.forEach(element => {
             element.url = "/agencias/" + req.params.id + "/atividades/" + element._id + "/view";
-            /*if (element.km != 0 ){
-                console.log(element.km);
-                element.color = 'red';
-            }*/
+            
         });
         //render show template with that agencia
         res.send(foundAgencia.atividades);
@@ -232,8 +228,7 @@ router.get("/:id/relatorios", function (req, res) {
             console.log(err);
             req.flash('error', 'Desculpe, essa agência não existe.');
             return res.redirect('/agencias');
-        }
-        console.log(foundAgencia)
+        }        
         //render show template with that agencia
         res.render("agencias/relatorios", { agencia: foundAgencia, atividades: atividades });
     });
@@ -247,12 +242,7 @@ router.post("/:id/relatorios", function (req, res) {
     var car = req.body.car;
     var filterStart = new Date(start.substr(0, 4), start.substr(5, 2) - 1, start.substr(8, 2), 0, 0, 0, 0);
     var filterEnd = new Date(end.substr(0, 4), end.substr(5, 2) - 1, end.substr(8, 2), 23, 59, 59, 999);
-    console.log('filterStart', filterStart);
-    console.log('filterEnd', filterEnd);
-
-    //start.setHours(0,0,0,0);
-
-    //end.setHours(23,59,59,999);
+    
     filter = {
         path: 'atividades',
         match: {
@@ -281,23 +271,21 @@ router.post("/:id/relatorios", function (req, res) {
 
 // ATIVIDADES
 
-router.post("/:id/atividades", checkToken, function (req, res) {
+router.post("/agencias/:id/atividades", checkToken, function (req, res) {
     //lookup agencia using ID   
     Agencia.findById(req.params.id, function (err, agencia) {
         if (err) {
             console.log(err);
             res.send({success:false, errorMessage:'Agencia não foi encontrada!'})
         } else {
-            Atividade.create(req.body.atividade, function (err, atividade) {
-                //console.log(req.body.atividade);
+            Atividade.create(req.body.atividade, function (err, atividade) {                
                 if (err) {
                     console.log(err);
                     res.send({success:false, errorMessage:'Erro ao criar atividade'})
                 } else {
                     //add username and id to atividade
                     atividade.author.id = req.body._id;
-                    atividade.author.username = req.body.username;
-                    //console.log(req.body.atividade);
+                    atividade.author.username = req.body.username;                    
                     //save atividade
                     atividade.save();
                     agencia.atividades.push(atividade);
@@ -319,8 +307,7 @@ router.put("/:id/atividades/:atividadeId", checkToken, function (req, res) {
     });
 });
 
-router.delete("/:id/atividades/:atividadeId", checkToken, function (req, res) {
-    // find agencia, remove atividade from atividades array, delete atividade in db
+router.delete("/agencias/:id/atividades/:atividadeId", checkToken, apiCheckUserAtividade,  function (req, res) {
     Agencia.findByIdAndUpdate(req.params.id, {
         $pull: {
             atividades: req.atividade.id
@@ -328,16 +315,17 @@ router.delete("/:id/atividades/:atividadeId", checkToken, function (req, res) {
     }, function (err) {
         if (err) {
             console.log(err)
-            res.send({success:false, errorMessage:'Erro ao encontar agencia para deletar atividade'});
+            res.send({success:false, errorMessage:err.message});            
         } else {
             req.atividade.remove(function (err) {
-                if (err) {
-                    res.send({success:false, errorMessage:'Erro ao deletar atividade'});
-                }
-                res.send({success:true, errorMessage:'Atividade removida com sucesso'});
+                if (err) {                    
+                    res.send({success:false, errorMessage:err.message});                    
+                }                
+                res.send({success:false, errorMessage:'Atividade removida com sucesso!'});
             });
         }
     });
+    
 });
 
 
