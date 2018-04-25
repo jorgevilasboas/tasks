@@ -321,7 +321,7 @@ router.delete("/agencias/:id/atividades/:atividadeId", checkToken, apiCheckUserA
                 if (err) {                    
                     res.send({success:false, errorMessage:err.message});                    
                 }                
-                res.send({success:false, errorMessage:'Atividade removida com sucesso!'});
+                res.send({success:true, errorMessage:'Atividade removida com sucesso!'});
             });
         }
     });
