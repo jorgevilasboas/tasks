@@ -21,15 +21,16 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
-router.get('/md5', function(req, res){
+router.get('/md5/:usuario', function(req, res){
     var md5 = require('md5');
-    User.findById("5a95a144ae89600014d654ac", function(err, foundUser){
+    const usuario = req.param.usuario;
+    User.findOne({username: usuario}, function(err, foundUser){
         if(err || !foundUser){
             res.send('Desculpe, essa usuario não foi encontrado!')            
         } else {
-            foundUser.md5pass = md5('lagarto');
+            foundUser.md5pass = md5('1234');
             foundUser.save();
-            res.send('senha lagarto salva em md5: ' + md5('lagarto') );
+            res.send('senha 1234 salva em md5: ' + md5('1234') );
         }
      });
 
