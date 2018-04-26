@@ -23,7 +23,7 @@ function escapeRegex(text) {
 
 router.get('/md5/:usuario', function(req, res){
     var md5 = require('md5');
-    const usuario = req.param.usuario;
+    const usuario = req.params.usuario;
     User.findOne({username: usuario}, function(err, foundUser){
         if(err || !foundUser){
             res.send('Desculpe, esse usuario não foi encontrado!')            
