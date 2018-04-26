@@ -26,7 +26,7 @@ router.get('/md5/:usuario', function(req, res){
     const usuario = req.param.usuario;
     User.findOne({username: usuario}, function(err, foundUser){
         if(err || !foundUser){
-            res.send('Desculpe, essa usuario não foi encontrado!')            
+            res.send('Desculpe, esse usuario não foi encontrado!')            
         } else {
             foundUser.md5pass = md5('1234');
             foundUser.save();
