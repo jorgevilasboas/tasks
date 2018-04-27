@@ -43,12 +43,10 @@ module.exports = {
        if(err || !foundAtividade){
            console.log(err);           
            res.send({success:false, errorMessage:'Desculpe, essa atividade não existe!'});           
-       } else if(foundAtividade.author.id.equals(req.body.user) ){
+       } else if(foundAtividade && foundAtividade.author && foundAtividade.author.id && foundAtividade.author.id.equals(req.body.user) ){
             req.atividade = foundAtividade;
             next();
-       } else {
-           console.log("FoundAtividade:", foundAtividade.author.id);
-           console.log("User: ", req.body.user);
+       } else {           
            res.send({success:false, errorMessage:'Você não tem permissão para fazer isso!'});
        }
     });

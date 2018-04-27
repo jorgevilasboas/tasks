@@ -32,18 +32,15 @@ router.get('/md5/:usuario', function(req, res){
             foundUser.save();
             res.send('senha 1234 salva em md5: ' + md5('1234') );
         }
-     });
-
-
-    
+     });    
 });
 
 // LOGIN
 router.post('/login', function(req, res){
     var md5 = require('md5');
     const {username, password} = req.body;
+    console.log(req.body);
     const md5pass = md5(password);
-
 
     User.findOne({username, md5pass}, function(err, foundUser){
         if(err || !foundUser){
@@ -53,10 +50,7 @@ router.post('/login', function(req, res){
             foundUser.md5pass = undefined;
             res.send(foundUser);
         }
-     });
-
-
-    
+     });    
 });
 
 router.get("/users", function (req, res) {
@@ -322,13 +316,10 @@ router.delete("/agencias/:id/atividades/:atividadeId", checkToken, apiCheckUserA
                 if (err) {                    
                     res.send({success:false, errorMessage:err.message});                    
                 }                
-                res.send({success:false, errorMessage:'Atividade removida com sucesso!'});
+                res.send({success:true, errorMessage:'Atividade removida com sucesso!'});
             });
         }
-    });
-    
+    });    
 });
 
-
 module.exports = router;
-
