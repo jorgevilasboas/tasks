@@ -292,7 +292,7 @@ router.post("/agencias/:id/atividades", checkToken, function (req, res) {
     });
 });
 
-router.put("/:id/atividades/:atividadeId", checkToken, function (req, res) {
+router.put("/agencias/:id/atividades/:atividadeId", checkToken, function (req, res) {
     Atividade.findByIdAndUpdate(req.params.atividadeId, req.body.atividade, function (err, atividade) {
         if (err) {            
             res.send({success:false, errorMessage:'Erro ao atualizar atividade'});
