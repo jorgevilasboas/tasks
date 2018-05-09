@@ -10,6 +10,7 @@ var atividadeSchema = mongoose.Schema({
     transport: Number,
     color: String,
     status: String,
+    obs: String,
     fields: [],
     resource_type: String,
     resource_value: Number,
