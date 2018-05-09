@@ -122,7 +122,7 @@
                                                 <% } %>
                     </td>
                     <td>
-                        <% if(currentUser && atividade.author.id.equals(currentUser._id)){ %>
+                        <% if(currentUser && atividade && atividade.author && atividade.author.id && atividade.author.id.equals(currentUser._id)){ %>
                             <a href="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>/edit" class="btn btn-xs btn-warning glyphicon glyphicon-pencil"></a>
                             <form class="delete-form" action="/agencias/<%=agencia._id%>/atividades/<%=atividade._id%>?_method=DELETE&action=relatorios"
                                 method="POST">
