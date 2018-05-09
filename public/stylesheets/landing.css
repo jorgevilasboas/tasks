@@ -56,11 +56,11 @@ h1 {
 }
 .slideshow li:nth-child(3) { 
   /*http://homesecurity.guide/wp-content/uploads/2016/08/kaboompics.com_Iphone-6-plus-in-womans-hand-e1472666224793.jpg*/
-  background-image: url(/images/notebook_office.jpg);
+  background-image: url(/images/agenda.jpg);
   animation-delay: 20s; 
 }
 .slideshow li:nth-child(4) { 
-  background-image: url(/images/apple_office.jpg);
+  background-image: url(/images/notebook_office.jpg);
   animation-delay: 30s; 
 }
 .slideshow li:nth-child(5) { 
