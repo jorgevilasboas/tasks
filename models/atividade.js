@@ -13,7 +13,7 @@ var atividadeSchema = mongoose.Schema({
     obs: String,
     fields: [],
     resource_type: String,
-    resource_value: Number,
+    resource_value: { type: Number, default: 0 }, 
     createdAt: { type: Date, default: Date.now },
     author: {
         id: {

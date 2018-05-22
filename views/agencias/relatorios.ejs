@@ -96,13 +96,17 @@
                         <%= atividade.km %>
                     </td>
                     <td>
-                        <% if(atividade.resource_type == 'D') { %>
-                            <% qtdeTotalDiaria += atividade.resource_value %>
-                            <%= "Diária" %>
-                        <% } else if (atividade.resource_type == 'I') { %>
-                                <%= "Idenização" %>
-                                <% qtdeTotalIdenizacao += atividade.resource_value %>
-                        <% } %>
+                        <% if(atividade.resource_value == '' || atividade.resource_value == 0) { %>
+                            <%= "-" %>
+                        <% } else { %>
+                            <% if(atividade.resource_type == 'D') { %>
+                                <% qtdeTotalDiaria += atividade.resource_value %>
+                                <%= "Diária" %>
+                            <% } else if (atividade.resource_type == 'I') { %>
+                                    <%= "Indenização" %>
+                                    <% qtdeTotalIdenizacao += atividade.resource_value %>
+                            <% } %>
+                        <% }  %>                        
                     </td>
                     <td>
                         <%= atividade.resource_value %>
